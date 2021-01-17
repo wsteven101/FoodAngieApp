@@ -1,0 +1,17 @@
+﻿.food-layout {
+    padding:10px;
+    border: 2px solid DeepSkyBlue;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 16px;
+
+}
+
+.food-label {
+    text-align: left;
+}
+
+.submit-button {
+    border-radius: 6px;
+    border: 2px solid DeepSkyBlue;
+}

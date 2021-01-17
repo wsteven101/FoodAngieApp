@@ -1,0 +1,61 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+
+
+WORKDIR /src/
+COPY [".", "/src"]
+
+# install npm
+WORKDIR /src/FoodApp/food-app/
+
+RUN apt update && apt -y upgrade
+RUN apt-get install -y wget
+
+RUN apt-get install -y gnupg
+RUN apt-get install -y gnupg1
+RUN apt-get install -y gnupg2
+
+RUN wget  https://deb.nodesource.com/setup_12.x
+RUN echo 'deb https://deb.nodesource.com/node_12.x  stretch  main' > /etc/apt/sources.list.d/nodesource.list
+RUN wget -qO - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+
+RUN apt update
+RUN apt install -y nodejs 
+
+WORKDIR /src/FoodApp/food-app
+RUN npm install react-router-dom
+RUN npm install @types/react-router-dom
+
+# finish npm and package install
+
+WORKDIR /src/
+
+
+RUN dotnet build  -c Release -o /app/build
+
+RUN dotnet publish -c Release -o /app/publish
+
+WORKDIR /src/FoodApp/food-app
+
+RUN "start of npm run build"
+RUN npm run build
+RUN "end of npm run build"
+
+
+#FROM build AS publish
+WORKDIR /src/
+
+
+COPY /src/FoodApp/food-app/build/static/*  /app/publish/ClientApp/build
+
+
+#FROM base AS final
+
+EXPOSE 80
+EXPOSE 443
+EXPOSE 5000
+EXPOSE 5001
+EXPOSE 44365
+
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "FoodApp.dll"]
