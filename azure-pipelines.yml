@@ -17,7 +17,7 @@ variables:
   snapversion: '1st snap version'
 
 steps:
-- bash: echo "snap version is $(snapversion)" 
+- bash: echo "snap version is $(snapversion) "; pwd 
   displayName: 'output snap version'
 
 - task: NodeTool@0
