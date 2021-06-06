@@ -27,7 +27,8 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'npm install npm --global'
+    script: 'pwd;npm install npm --global'
+    workingDirectory: ./FoodApp
 
 - task: DotNetCoreCLI@2
   displayName: Restore
