@@ -28,7 +28,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: 'npm install'
-    workingDirectory: ./FoodApp
+    workingDirectory: ./FoodApp/food-app
 
 - task: DotNetCoreCLI@2
   displayName: Restore
