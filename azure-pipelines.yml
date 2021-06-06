@@ -27,7 +27,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'pwd;npm install npm --global'
+    script: 'npm install'
     workingDirectory: ./FoodApp
 
 - task: DotNetCoreCLI@2
