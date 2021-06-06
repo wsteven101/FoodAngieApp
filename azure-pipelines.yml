@@ -25,11 +25,10 @@ steps:
     versionSpec: '6.x'
     checkLatest: true
 
-- task: 
 - task: CmdLine@2
   inputs:
     script: 'npm install npm --global'
-    
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs: 
