@@ -58,7 +58,7 @@ const MainPage: React.FC = () => {
 
                         <Route path="/bag/:bagName" render={(props) => <Bag nameParam={props.match.params.bagName}></Bag>} ></Route>
 
-                        <Route exact path="/bag" render={(props) => <Bag nameParam={props.match.params.bagName}></Bag>} ></Route>
+                        {/*<Route exact path="/bag" render={(props) => <Bag nameParam={props.match.params.bagName}></Bag>} ></Route>*/}
 
                         <Route exact path="/" render={(props) => <Food nameParam=""
                             updatedFoodCallback={(i: number) => { }}></Food>} ></Route>
