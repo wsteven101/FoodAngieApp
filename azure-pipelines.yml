@@ -15,7 +15,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   snapversion: '1st snap version'
-  imageName: FoodAppRegistry
+  imageName: food-app
 
 steps:
 - bash: echo "snap version is $(snapversion) "; pwd 
@@ -66,6 +66,7 @@ steps:
 - task: Docker@2
   displayName: Building Docker Image
   inputs: 
+    containerRegistry: FoodAppRegistry
     repository: $(imageName)
     command: build
     Dockerfile: Dockerfile
