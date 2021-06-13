@@ -10,11 +10,12 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
+variables:  
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   snapversion: '1st snap version'
+  imageName: food-app
 
 steps:
 - bash: echo "snap version is $(snapversion) "; pwd 
@@ -62,5 +63,11 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'snapGame'
     
+- task: Docker@2
+  displayName: Building Docker Image
+  inputs: 
+    repository: $(imageName)
+    command: build
+    Dockerfile: Dockerfile
 
    
