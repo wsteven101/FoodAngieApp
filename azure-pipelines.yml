@@ -15,7 +15,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   snapversion: '1st snap version'
-  imageName: food-app
+  imageName: FoodAppRegistry
 
 steps:
 - bash: echo "snap version is $(snapversion) "; pwd 
