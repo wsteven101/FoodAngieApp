@@ -73,9 +73,10 @@ steps:
 - task: Docker@2
   displayName: Building Docker Image
   inputs: 
-#    containerRegistry: FoodAppRegistry
+    containerRegistry: FoodAppRegistry
     repository: $(imageName)
     command: build
     Dockerfile: Dockerfile
+    tags: pipeline
 
    
