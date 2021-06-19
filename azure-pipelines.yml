@@ -85,3 +85,4 @@ steps:
     containerRegistry: FoodAppRegistry
     repository: $(imageName)
     command: push
+    tags: pipeline
