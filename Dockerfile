@@ -69,7 +69,11 @@ RUN cp /src/food-system.yaml /app/publish/food-system.yaml
 RUN ls -ltr /app/publish
 
 WORKDIR /app/publish/
+
 RUN cp /src/food-system.yaml .
+RUN ls -ltr /src/food/*.yaml
+RUN cp -f /src/food/*.yaml .
+RUN ls -ltr .
 
 WORKDIR /src/FoodApp/food-app
 
