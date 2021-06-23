@@ -64,11 +64,7 @@ RUN dotnet publish -c Release -o /app/publish
 
 RUN ls -ltr ./food-system.yaml
 
-COPY ["./food-system.yaml", "/app/publish/food-system.yaml"]
-
-RUN ls /app/publish
-
-COPY ["food-system.yaml", "/app/publish/food-system.yaml"]
+RUN cp ./food-system.yaml /app/publish/food-system.yaml
 
 RUN ls /app/publish
 
