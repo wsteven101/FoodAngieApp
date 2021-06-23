@@ -62,7 +62,11 @@ RUN dotnet build  -c Release -o /app/build
 
 RUN dotnet publish -c Release -o /app/publish
 
+RUN ls -ltr ./food-system.yaml
+
 COPY ./food-system.yaml /app/publish
+
+RUN ls /app/publish
 
 WORKDIR /src/FoodApp/food-app
 
