@@ -68,6 +68,10 @@ COPY ["./food-system.yaml", "/app/publish/food-system.yaml"]
 
 RUN ls /app/publish
 
+COPY ["food-system.yaml", "/app/publish/food-system.yaml"]
+
+RUN ls /app/publish
+
 WORKDIR /src/FoodApp/food-app
 
 RUN echo "start of npm run build"
