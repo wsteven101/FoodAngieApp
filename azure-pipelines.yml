@@ -8,13 +8,14 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImageName: 'ubuntu-latest'
 
-variables:
+variables:  
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   snapversion: '1st snap version'
+  imageName: food-app
 
 steps:
 - bash: echo "snap version is $(snapversion) "; pwd 
@@ -55,12 +56,36 @@ steps:
     publishWebProjects: false
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
+    
+- task: Docker@2
+  displayName: Login to Docker Repo
+  inputs:
+    command: login
+    containerRegistry: FoodAppRegistry
+
+  
+- task: Docker@2
+  displayName: Building Docker Image
+  inputs: 
+    containerRegistry: FoodAppRegistry
+    repository: $(imageName)
+    command: build
+    Dockerfile: Dockerfile
+    tags: pipeline
+   
+- task: Docker@2
+  displayName: Push Docker Image
+  inputs: 
+    containerRegistry: FoodAppRegistry
+    repository: $(imageName)
+    command: push
+    tags: pipeline
 
 - task: PublishBuildArtifacts@1
   displayName: Publish Artifact
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'snapGame'
-    
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'manifests'
 
-   
+
+        
