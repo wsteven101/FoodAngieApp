@@ -64,9 +64,12 @@ RUN dotnet publish -c Release -o /app/publish
 
 RUN ls -ltr ./food-system.yaml
 
-RUN cp ./food-system.yaml /app/publish/food-system.yaml
+RUN cp /src/food-system.yaml /app/publish/food-system.yaml
 
-RUN ls /app/publish
+RUN ls -ltr /app/publish
+
+WORKDIR /app/publish/
+RUN cp /src/food-system.yaml .
 
 WORKDIR /src/FoodApp/food-app
 
