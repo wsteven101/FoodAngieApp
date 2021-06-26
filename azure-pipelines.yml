@@ -48,6 +48,11 @@ steps:
    command: test
    arguments: '--configuration $(buildConfiguration)'
 
+- task: Bash@3
+  displayName: copying kubernetes config file to build output
+  inputs:
+    targetType: inline
+    script: cp ./food-system.yaml  $(Build.ArtifactStagingDirectory); pwd; ls -R; ls $(Build.ArtifactStagingDirectory)
 
 - task: DotNetCoreCLI@2
   displayName: Publish Build
