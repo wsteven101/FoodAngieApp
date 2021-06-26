@@ -25,9 +25,11 @@ spec:
         spec:
             containers:
                 - name: foodapp
-                  image: "food-app"             
+                  image: "food-app"                 
                   ports:
                   - containerPort: 5000
+            imagePullSecrets:
+                - name: food-app-secret                  
  #           volumes:
  #               - name: credvol
  #                 secret:
