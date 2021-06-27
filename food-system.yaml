@@ -31,7 +31,7 @@ spec:
                   - containerPort: 5000
                   command: [ "echo", "SUCCESS" ]
             imagePullSecrets:
-                - name: food-app-secret                  
+                - name: regcred                  
  #           volumes:
  #               - name: credvol
  #                 secret:
