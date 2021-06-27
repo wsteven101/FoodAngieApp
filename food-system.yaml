@@ -25,7 +25,7 @@ spec:
         spec:
             containers:
                 - name: foodapp
-                  image: "food-app"                 
+                  image: food-app:pipeline               
                   ports:
                   - containerPort: 5000
             imagePullSecrets:
