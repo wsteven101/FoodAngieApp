@@ -25,9 +25,11 @@ spec:
         spec:
             containers:
                 - name: foodapp
-                  image: food-app:pipeline               
+                  image: food-app:pipeline
+                  imagePullPolicy: Always                  
                   ports:
                   - containerPort: 5000
+                  command: [ "echo", "SUCCESS" ]
             imagePullSecrets:
                 - name: food-app-secret                  
  #           volumes:
