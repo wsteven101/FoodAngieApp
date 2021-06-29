@@ -108,7 +108,6 @@ steps:
    ls -R
   displayName: 'Bash Script'
   
-steps:
 - task: Kubernetes@1
   displayName: 'kubectl apply'
   inputs:
