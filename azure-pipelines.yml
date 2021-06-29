@@ -95,7 +95,18 @@ steps:
 - bash: |
    pwd
    ls -R
-  displayName: 'Bash Script'
+  displayName: 'List dir contents'
+
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    downloadPath: '$(System.DefaultWorkingDirectory)'
+
+- bash: |
+   pwd
+   ls -R
+  displayName: 'List dir contents'
 
 - task: ExtractFiles@1
   displayName: 'Extract files '
@@ -103,10 +114,11 @@ steps:
     destinationFolder: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact'
     overwriteExistingFiles: true
 
+
 - bash: |
    pwd
    ls -R
-  displayName: 'Bash Script'
+  displayName: 'List dir contents'
   
 - task: Kubernetes@1
   displayName: 'kubectl apply'
