@@ -9,6 +9,7 @@ resources:
 - repo: self
 
 variables:
+  deploymentenvirnoment: 'DEV'
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'c6eb8dd7-a558-4fef-8cf8-51e9e873c43b'
   imageRepository: 'wstevenfoodapp'
@@ -132,6 +133,27 @@ stages:
           pwd
           ls -R
         displayName: 'List dir contents'
+
+- stage: CD
+  displayName: Deploy to Kubernetes Cluster
+  jobs:
+   - deployment: deploy
+     displayName: deploy
+     environment: $(deploymentenvirnoment)
+     strategy:
+      runOnce:   #rolling, canary are the other strategies that are supported
+        deploy:
+          steps:
+          - task: Kubernetes@1
+            displayName: 'kubectl apply'
+            inputs:
+                kubernetesServiceEndpoint: 'K8 FoodApp V4'
+                command: apply
+                useConfigurationFile: true
+                configuration: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
+                azureSubscriptionEndpointForSecrets: 'Azure Subscription (upgraded from free plan) (dabf6320-db56-447e-86c4-bb677d87a890)'
+                azureContainerRegistry: foodappregistry.azurecr.io
+                secretName: 'food-app-secret'
 
 
 
