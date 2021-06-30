@@ -110,9 +110,11 @@ stages:
 - stage: CD
   displayName: Deploy to Kubernetes Cluster
   jobs:
+   - job: deployK8
    - deployment: deploy
      displayName: deploy
      environment: $(deploymentenvirnoment)
+     
      strategy:
       runOnce:   #rolling, canary are the other strategies that are supported
         deploy:
@@ -158,5 +160,41 @@ stages:
                 azureContainerRegistry: foodappregistry.azurecr.io
                 secretName: 'food-app-secret'
 
+   - job: checkPort
+   - deployment: deploy
+     displayName: check to see if web app already exposed on K8
+     environment: $(deploymentenvirnoment)
+     
+     
+     strategy:
+      runOnce:   #rolling, canary are the other strategies that are supported
+        deploy:
+          steps:
+          - bash: |
+              kubectl get services | grep food-app-deploy-http2
+            displayName: 'Test for resource '          
 
+   - job: checkPort
+     dependsOn: deployK8
+     condition: failed()
+   - deployment: deploy
+     displayName: expose web app port on K8
+     environment: $(deploymentenvirnoment)
+
+     strategy:
+      runOnce:   #rolling, canary are the other strategies that are supported
+        deploy:
+          steps:
+
+          - task: Kubernetes@1
+            displayName: 'kubectl expose'
+            continueOnError: true
+            inputs:
+              kubernetesServiceEndpoint: 'K8 FoodApp V4'
+              namespace: default
+              command: expose
+              arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
+              azureSubscriptionEndpointForSecrets: 'Azure Subscription (upgraded from free plan) (dabf6320-db56-447e-86c4-bb677d87a890)'
+              azureContainerRegistry: foodappregistry.azurecr.io
+              secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
 
