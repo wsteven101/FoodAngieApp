@@ -105,34 +105,7 @@ stages:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           artifactName: 'manifests'
 
-      - bash: |
-          pwd
-          ls -R
-        displayName: 'List dir contents'
 
-
-      - task: DownloadBuildArtifacts@1
-        inputs:
-          buildType: 'current'
-          downloadType: 'single'
-          downloadPath: '$(System.DefaultWorkingDirectory)'
-
-      - bash: |
-          pwd
-          ls -R
-        displayName: 'List dir contents'
-
-      - task: ExtractFiles@1
-        displayName: 'Extract files '
-        inputs:
-          destinationFolder: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact'
-          overwriteExistingFiles: true
-
-
-      - bash: |
-          pwd
-          ls -R
-        displayName: 'List dir contents'
 
 - stage: CD
   displayName: Deploy to Kubernetes Cluster
@@ -144,6 +117,36 @@ stages:
       runOnce:   #rolling, canary are the other strategies that are supported
         deploy:
           steps:
+
+          - bash: |
+              pwd
+              ls -R
+            displayName: 'List dir contents'
+
+
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              downloadPath: '$(System.DefaultWorkingDirectory)'
+
+          - bash: |
+              pwd
+              ls -R
+            displayName: 'List dir contents'
+
+          - task: ExtractFiles@1
+            displayName: 'Extract files '
+            inputs:
+              destinationFolder: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact'
+              overwriteExistingFiles: true
+
+
+          - bash: |
+              pwd
+              ls -R
+            displayName: 'List dir contents'
+
           - task: Kubernetes@1
             displayName: 'kubectl apply'
             inputs:
