@@ -107,7 +107,7 @@ stages:
 
 
 
-- stage: CD K8
+- stage: CD_K8
   displayName: Deploy to Kubernetes Cluster
   jobs:
    - job: deployK8
