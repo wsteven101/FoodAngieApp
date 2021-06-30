@@ -15,6 +15,11 @@ variables:
   containerRegistry: 'foodappregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  snapversion: '1st snap version'
+  imageName: food-app
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -28,12 +33,29 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+      - bash: echo "snap version is $(snapversion) "; pwd 
+        displayName: 'output snap version'
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '6.x'
+          checkLatest: true
+      - task: CmdLine@2
+        inputs:
+          script: 'npm install'
+          workingDirectory: ./FoodApp/food-app       
+      - task: DotNetCoreCLI@2
+        displayName: Restore
+        inputs: 
+          command: restore 
+      - task: DotNetCoreCLI@2
+        displayName: 'Build $(buildConfiguration)'
+        inputs:
+          command: build
+          arguments: '--configuration $(buildConfiguration)'
+
+      - task: DotNetCoreCLI@2
+        displayName: Run Tests
+        inputs: 
+          command: test
+          arguments: '--configuration $(buildConfiguration)'
+
