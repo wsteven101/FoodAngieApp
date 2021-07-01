@@ -161,17 +161,26 @@ stages:
                 secretName: 'food-app-secret'
 
    - job: checkPort
-     displayName: check to see if web app already exposed on K8
+     displayName: check for port
      dependsOn: deployK8
      steps:
-          - bash: |
-              kubectl get services | grep food-app-deploy-http2
-            displayName: 'Test for resource '          
+#          - bash: |
+#              kubectl get services | grep food-app-deploy-http2
+#            displayName: 'Test for resource '          
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'K8 FoodApp V4'
+              namespace: 'default'
+              command: 'get'
+              arguments: 'service food-app-deploy-http2'
+              secretType: 'dockerRegistry'
+              containerRegistryType: 'Azure Container Registry'
 
    - deployment: exposeport
      dependsOn: checkPort
      condition: failed()   
-     displayName: expose web app port on K8
+     displayName: expose port
      environment: $(deploymentenvirnoment)
 
      strategy:
