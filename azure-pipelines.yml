@@ -92,7 +92,8 @@ stages:
           repository: $(imageName)
           command: build
           Dockerfile: Dockerfile
-          tags: pipeline
+          tags: latest |
+           $tag
         
       - task: Docker@2
         displayName: Push Docker Image
@@ -100,8 +101,9 @@ stages:
           containerRegistry: FoodAppRegistry
           repository: $(imageName)
           command: push
-          tags: pipeline
-
+          tags: latest |
+           $tag
+           
       - task: PublishBuildArtifacts@1
         displayName: Publish Artifact
         inputs:
@@ -144,7 +146,6 @@ stages:
             inputs:
               destinationFolder: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact'
               overwriteExistingFiles: true
-
 
           - bash: |
               pwd
