@@ -29,6 +29,9 @@ stages:
 - stage: Build
   displayName: Build and push stage
   jobs:
+
+# Build the .Net solution, containerise it and push to an Azure docker registry
+
   - job: Build
     displayName: Build
     
@@ -105,14 +108,13 @@ stages:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           artifactName: 'manifests'
 
-
+# Deploy the Docker image to the cluster using a kubectl config file
 
 - stage: CD_K8
   displayName: Deploy to Kubernetes Cluster
   jobs:
-   - job: deployK8
-   - deployment: deploy
-     displayName: deploy
+   - deployment: deployK8
+     displayName: deploy image to K8 cluster
      environment: $(deploymentenvirnoment)
      
      strategy:
@@ -160,13 +162,12 @@ stages:
                 azureContainerRegistry: foodappregistry.azurecr.io
                 secretName: 'food-app-secret'
 
+# Check if the pod's port has already been exposed by looking for the service food-app-deploy-http2
+
    - job: checkPort
      displayName: check for port
      dependsOn: deployK8
-     steps:
-#          - bash: |
-#              kubectl get services | grep food-app-deploy-http2
-#            displayName: 'Test for resource '          
+     steps:       
           - task: Kubernetes@1
             inputs:
               connectionType: 'Kubernetes Service Connection'
@@ -176,6 +177,8 @@ stages:
               arguments: 'service food-app-deploy-http2'
               secretType: 'dockerRegistry'
               containerRegistryType: 'Azure Container Registry'
+
+# Expose the port has not already been exposed (i.e. run if job 'checkPort' ddn't find the service already)
 
    - deployment: exposeport
      dependsOn: checkPort
