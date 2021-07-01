@@ -161,23 +161,16 @@ stages:
                 secretName: 'food-app-secret'
 
    - job: checkPort
-   - deployment: deploy
      displayName: check to see if web app already exposed on K8
-     environment: $(deploymentenvirnoment)
-     
-     
-     strategy:
-      runOnce:   #rolling, canary are the other strategies that are supported
-        deploy:
-          steps:
+     dependsOn: deployK8
+     steps:
           - bash: |
               kubectl get services | grep food-app-deploy-http2
             displayName: 'Test for resource '          
 
-   - job: checkPort
-     dependsOn: deployK8
-     condition: failed()
-   - deployment: deploy
+   - deployment: exposeport
+     dependsOn: checkPort
+     condition: failed()   
      displayName: expose web app port on K8
      environment: $(deploymentenvirnoment)
 
