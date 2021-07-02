@@ -1,6 +1,19 @@
-# Docker
-# Build and push an image to Azure Container Registry and deploy to a Kubernetes cluster
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+#######################################################################################################
+#
+# Build a web app, containerise it with docker, push to the registry 
+# and then deploy to a kubernetes cluster
+#
+# The Kubernetes cluster must be created before running this pipeline.
+# This can be created with the following azure command from an azure cloud shell:
+#
+#     az aks create --resource-group FoodApp --name FoodAppKube1 --node-count 1 --enable-addons monitoring --generate-ssh-keys --attach-acr FoodAppRegistry
+#
+# Note that the pipeline expects
+# 1) A Kubernetes service connection
+# 2) A dockers secret with which to acces the docker registry
+#
+######################################################################################################
+
 
 trigger:
 - master
