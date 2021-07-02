@@ -25,7 +25,7 @@ spec:
         spec:
             containers:
                 - name: foodapp
-                  image: foodappregistry.azurecr.io/food-app:latest
+                  image: foodappregistry.azurecr.io/food-app
                   imagePullPolicy: Always                  
                   ports:
                   - containerPort: 5000
