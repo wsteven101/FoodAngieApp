@@ -92,7 +92,9 @@ stages:
           repository: $(imageName)
           command: build
           Dockerfile: Dockerfile
-          tags: $(tag)
+          tags: |
+            $(tag) 
+            latest    # tag the image with both 'latest' and the build number
         
       - task: Docker@2
         displayName: Push Docker Image
@@ -100,7 +102,9 @@ stages:
           containerRegistry: FoodAppRegistry
           repository: $(imageName)
           command: push
-          tags: $(tag) latest    # tag the image with both 'latest' and the build number
+          tags: |
+            $(tag) 
+            latest    # push both images 'latest' and image with the build number
            
       - task: PublishBuildArtifacts@1
         displayName: Publish Artifact
