@@ -92,7 +92,7 @@ stages:
           repository: $(imageName)
           command: build
           Dockerfile: Dockerfile
-          tags: latest
+          tags: $(tag)
         
       - task: Docker@2
         displayName: Push Docker Image
@@ -100,7 +100,7 @@ stages:
           containerRegistry: FoodAppRegistry
           repository: $(imageName)
           command: push
-          tags: latest
+          tags: $(tag)
            
       - task: PublishBuildArtifacts@1
         displayName: Publish Artifact
@@ -150,16 +150,25 @@ stages:
               ls -R
             displayName: 'List dir contents'
 
-          - task: Kubernetes@1
-            displayName: 'kubectl apply'
+#          - task: Kubernetes@1
+#            displayName: 'kubectl apply'
+#            inputs:
+#                kubernetesServiceEndpoint: 'K8 FoodApp V4'
+#                command: apply
+#                useConfigurationFile: true
+#                configuration: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
+#                azureSubscriptionEndpointForSecrets: 'Azure Subscription (upgraded from free plan) (dabf6320-db56-447e-86c4-bb677d87a890)'
+#                azureContainerRegistry: foodappregistry.azurecr.io
+#                secretName: 'food-app-secret'
+
+          - task: KubernetesManifest@0
             inputs:
-                kubernetesServiceEndpoint: 'K8 FoodApp V4'
-                command: apply
-                useConfigurationFile: true
-                configuration: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
-                azureSubscriptionEndpointForSecrets: 'Azure Subscription (upgraded from free plan) (dabf6320-db56-447e-86c4-bb677d87a890)'
-                azureContainerRegistry: foodappregistry.azurecr.io
-                secretName: 'food-app-secret'
+              action: 'deploy'
+              kubernetesServiceConnection: 'K8 FoodApp V4'
+              namespace: 'default'
+              manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
+              containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
+              imagePullSecrets: 'food-app-secret'
 
 # Check if the pod's port has already been exposed by looking for the service food-app-deploy-http2
 
