@@ -10,7 +10,7 @@
 #
 # Note that the pipeline expects
 # 1) A Kubernetes service connection
-# 2) A dockers secret with which to acces the docker registry
+# 2) A dockers secret named 'food-app-secret' with which to acces the docker registry
 #
 ######################################################################################################
 
@@ -97,7 +97,7 @@ stages:
           command: login
           containerRegistry: FoodAppRegistry
 
-        
+        # tag the image with both 'latest' and the build number
       - task: Docker@2
         displayName: Building Docker Image
         inputs: 
@@ -106,9 +106,10 @@ stages:
           command: build
           Dockerfile: Dockerfile
           tags: |
-            $(tag) 
-            latest    # tag the image with both 'latest' and the build number
+            $(tag)
+            latest
         
+        # push both images 'latest' and image with the build number
       - task: Docker@2
         displayName: Push Docker Image
         inputs: 
@@ -116,9 +117,9 @@ stages:
           repository: $(imageName)
           command: push
           tags: |
-            $(tag) 
-            latest    # push both images 'latest' and image with the build number
-           
+            $(tag)
+            latest          
+ 
       - task: PublishBuildArtifacts@1
         displayName: Publish Artifact
         inputs:
