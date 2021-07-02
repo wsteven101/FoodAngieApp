@@ -100,7 +100,7 @@ stages:
           containerRegistry: FoodAppRegistry
           repository: $(imageName)
           command: push
-          tags: $(tag)
+          tags: $(tag) latest    # tag the image with both 'latest' and the build number
            
       - task: PublishBuildArtifacts@1
         displayName: Publish Artifact
@@ -150,6 +150,9 @@ stages:
               ls -R
             displayName: 'List dir contents'
 
+# replaced the kubernetes out of the box task with the manifest one below for the ease
+# of appending the build id to the docker image within the k8 config file.
+# One could instead have used this commented out section and passed the build id as an argument
 #          - task: Kubernetes@1
 #            displayName: 'kubectl apply'
 #            inputs:
