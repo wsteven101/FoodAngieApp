@@ -1,0 +1,12 @@
+<div class="body">
+
+
+  <h1>bag editor</h1>
+  <p>bag editor</p>
+  <div>
+    <div *ngFor="let item of bags$ | async; let i = index">
+      <app-bag-card [bag]="item"></app-bag-card>
+      <div>{{item.name}}</div>
+    </div>
+  </div>
+</div>

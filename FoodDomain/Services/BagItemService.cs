@@ -1,5 +1,6 @@
 ﻿using FoodDomain.Entities;
 using FoodDomain.Interfaces;
+using FoodDomain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,71 +12,31 @@ namespace FoodDomain.Services
     public class BagItemService : IBagItemService
     {
 
-        public static Dictionary<string,BagItem> _mockDBList = new Dictionary<string, BagItem>();
+        private IBagItemRepo _bagRepo;
 
-        static long _mockNextIdentityNum = 1;
-
-        static BagItemService()
+        public BagItemService(IBagItemRepo bagRepo)
         {
-                IFoodItemService s = new FoodItemService();
-
-                var b1 = new BagItem
-                {
-                    Id = 0,
-                    Name = "Favourite",
-                    Foods = new List<FoodItemNode>(),
-                    Bags = new List<BagItemNode>()
-                };
-                b1.AddFood( s.Get(1) );
-                b1.AddFood( s.Get(2) );
-
-                var b2 = new BagItem
-                {
-                    Id = 0,
-                    Name = "Big Bag",
-                    Foods = new List<FoodItemNode>(),
-                    Bags = new List<BagItemNode>()
-                };
-            
-                b2.AddFood(s.Get(3));
-                b2.AddFood(s.Get(4));
-                b2.AddBag(b1);
-
-                _mockDBList[b1.Name] = b1;
-                _mockDBList[b2.Name] = b2;
-
-                foreach (var f in _mockDBList)
-                {
-                    f.Value.Id = GetNextId();
-                }
-            
-        }
-
-        static public long GetNextId()
-        {
-            return _mockNextIdentityNum++;
+            _bagRepo = bagRepo;
         }
 
 
-        public BagItem GetByName(string name)
+        public async Task<BagItem> GetByName(string name)
         {
-            if (_mockDBList.TryGetValue(name, out BagItem item))
-            {
-                return item;
-            }
+            var bagDto = await _bagRepo.GetByName(name);
 
-            return default;
+            return new BagItem(bagDto);
+        }
+
+        public async Task<List<BagItem>> GetBagsByUserId(long userId)
+        {
+            var userBagsDtos = await _bagRepo.GetBagsByUserId(userId);
+            var userBagItems = userBagsDtos.Select(b=> new BagItem(b));
+            return userBagItems.ToList();
         }
 
         public void Update(BagItem item)
         {
 
-            if (_mockDBList.TryGetValue(item.Name, out BagItem updateItem))
-            {
-                _mockDBList.Remove(item.Name);
-                item.Id = GetNextId();
-            }
-            _mockDBList[item.Name] = item;
 
         }
     }

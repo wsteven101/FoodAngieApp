@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodApp", "FoodApp\FoodApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDomain", "FoodDomain\FoodDomain.csproj", "{8A3F7519-3FFA-4D26-87FB-C5882AC20B24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Food.Data", "Food.Data\Food.Data.csproj", "{C2BD8F7D-EA9C-4E45-97DF-4CAF6D7A378D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Food.Data", "Food.Data\Food.Data.csproj", "{C2BD8F7D-EA9C-4E45-97DF-4CAF6D7A378D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test.Integration", "Test.Integration", "{EBD66FA8-95F5-436A-B620-8D4803224EB8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Food.Data.IntTest", "Test.Integration\Food.Data.IntTest\Food.Data.IntTest.csproj", "{3AD177AA-D48C-40C8-9B51-CDE81EDD9222}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodDomain.IntTest", "Test.Integration\FoodDomain.IntTest\FoodDomain.IntTest.csproj", "{8860C8FC-1E22-4555-9748-2F59A9BE352E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +33,21 @@ Global
 		{C2BD8F7D-EA9C-4E45-97DF-4CAF6D7A378D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2BD8F7D-EA9C-4E45-97DF-4CAF6D7A378D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2BD8F7D-EA9C-4E45-97DF-4CAF6D7A378D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD177AA-D48C-40C8-9B51-CDE81EDD9222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD177AA-D48C-40C8-9B51-CDE81EDD9222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD177AA-D48C-40C8-9B51-CDE81EDD9222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD177AA-D48C-40C8-9B51-CDE81EDD9222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8860C8FC-1E22-4555-9748-2F59A9BE352E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8860C8FC-1E22-4555-9748-2F59A9BE352E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8860C8FC-1E22-4555-9748-2F59A9BE352E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8860C8FC-1E22-4555-9748-2F59A9BE352E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AD177AA-D48C-40C8-9B51-CDE81EDD9222} = {EBD66FA8-95F5-436A-B620-8D4803224EB8}
+		{8860C8FC-1E22-4555-9748-2F59A9BE352E} = {EBD66FA8-95F5-436A-B620-8D4803224EB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C33BAB7-C140-42CC-BD25-185FB1EADB94}

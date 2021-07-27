@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodDomain.DTO.Repo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FoodDomain.Repositories
 {
-    interface IFoodItemRepo
+    public interface IFoodItemRepo
     {
-        string Get(string name);
+        FoodRDto GetByName(string name);
     }
 }

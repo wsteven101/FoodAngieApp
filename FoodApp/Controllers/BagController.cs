@@ -31,10 +31,19 @@ namespace FoodApp.Controllers
 
         // GET api/<FoodController>/5
         [HttpGet("{id}")]
-        public BagItem Get(string id)
+        public async Task<BagItem> Get(string id)
         {
-            var item = _bagService.GetByName(id);
+            var item = await _bagService.GetByName(id);
             return item;
+        }
+
+        // GET api/<FoodController>/5
+        [HttpGet("userbags/{id}")]
+        public async Task<ActionResult<List<BagItem>>> GetUserBags(string id)
+        {
+            int userId = Int32.Parse(id);
+            var bags = await _bagService.GetBagsByUserId(userId);
+            return bags.ToList();
         }
 
         // POST api/<BagItem>

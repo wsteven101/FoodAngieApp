@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Food.Data.IntTest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Deveopment"
+      }
+    }
+  }
+}
