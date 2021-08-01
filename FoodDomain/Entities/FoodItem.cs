@@ -3,7 +3,7 @@
 namespace FoodDomain.Entities
 {
 
-    public record NutritionalContent(decimal Fat, decimal SaturatedFat, decimal Sugar, decimal Salt);
+    //public record NutritionalContent(decimal Fat, decimal SaturatedFat, decimal Sugar, decimal Salt);
 
     public record FoodItem
     {

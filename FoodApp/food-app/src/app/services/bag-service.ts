@@ -14,9 +14,10 @@ export class BagService {
 
   public getBag(id: string): Observable<Bag> {
 
+    //const options = id ? { params: new HttpParams().set('id', id) } : {};
     const options = id ? { params: new HttpParams().set('id', id) } : {};
 
-    let urlStr: string = 'api/Bag/' + id;
+    let urlStr: string = 'http://localhost:54657/api/Bag/' + id;
     console.log("Order Repository calling:" + urlStr);
 
     return this.httpClient.get<Bag>(urlStr, options);

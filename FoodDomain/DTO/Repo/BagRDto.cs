@@ -13,6 +13,7 @@ namespace FoodDomain.DTO.Repo
         public string Name { get; set; }
         public string ConstituentsJSON { get; set; }
         public long NutritionId { get; set; }
+        public NutritionRDto Nutrition { get; set; }
 
     }
 }

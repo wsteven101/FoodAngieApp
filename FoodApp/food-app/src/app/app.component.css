@@ -4,6 +4,6 @@
 }
 
 .testouside {
-    width: 300px;
-    height:220px;
+    width: stretch;
+    height:stretch;
 }

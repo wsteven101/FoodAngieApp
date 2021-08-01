@@ -1,0 +1,45 @@
+.bag-card-title {
+    margin-top: 10px;
+}
+
+.bag-card-body{
+    border: solid;
+    border-color: blue;
+    border-width: 1px;
+    min-width: 100px;
+    max-width: 200px;
+
+}
+
+.bag-view-button {
+  border-color: blue;
+  border: solid;
+  border-width: 1px;
+  border-radius: 7px;
+  background-color: lightblue;
+  margin-top: 20px;
+  height: 40px;
+}
+
+.bag-content {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 10px;
+  margin: 10px;
+  margin-bottom:20px;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bag-actions {
+
+}
+
+.card-footer {
+    height:10px;
+}

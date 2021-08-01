@@ -11,10 +11,13 @@ namespace FoodDomain.Entities
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public NutritionalContent Nutrition { get; set; }
         public IList<FoodItemNode> Foods { get; init; } = new List<FoodItemNode>();
         public IList<BagItemNode> Bags { get; init; } = new List<BagItemNode>();
 
         private string ConstituentsJSON = "";
+
+        public BagItem() { } 
 
         public BagItem(BagRDto bag)
         {

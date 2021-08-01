@@ -1,5 +1,7 @@
-.body {
-    height: 200px;
-    width: 200px;
-    background-color: antiquewhite;
+.bag-editor-body {
+  height: stretch;
+  width: stretch;
+  background-color: white;
+  border: solid;
+  border-color: lawngreen;
 }

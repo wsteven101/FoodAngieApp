@@ -11,6 +11,7 @@ namespace FoodDomain.Interfaces
     {
         public FoodItem Get(long id);
         public FoodItem GetByName(string name);
+        public Task<List<FoodItem>> GetUserFoods(long userId);
         public void Update(FoodItem foodItem);
     }
 }

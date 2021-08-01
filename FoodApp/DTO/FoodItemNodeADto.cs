@@ -5,5 +5,7 @@ using System.Threading.Tasks;
 
 namespace FoodApp.DTO
 {
-    public record BagItemNodeADto(int Quantity, BagItemADto Bag);
+
+    public record FoodItemNodeADto(int Quantity, FoodItemADto Food);
+
 }

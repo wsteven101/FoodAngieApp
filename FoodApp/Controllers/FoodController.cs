@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodDomain.Interfaces;
+using AutoMapper;
+using FoodApp.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,12 +17,15 @@ namespace FoodApp.Controllers
     [ApiController]
     public class FoodController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        readonly IFoodItemService _foodService;
 
-        readonly IFoodItemService foodService;
-
-        public FoodController(IFoodItemService foodItemService)
+        public FoodController(
+            IFoodItemService foodItemService,
+            IMapper mapper)
         {
-            foodService = foodItemService;
+            _mapper = mapper;
+            _foodService = foodItemService;
         }
 
         // GET: api/<FoodController>
@@ -35,15 +40,24 @@ namespace FoodApp.Controllers
         [HttpGet("{id}")]
         public FoodItem Get(string id)
         {
-            var food = foodService.GetByName(id);
+            var food = _foodService.GetByName(id);
             return food;
+        }
+
+        public async Task<List<FoodItemADto>> GetUserFoods(string id)
+        {
+            int userId = Int32.Parse(id);
+            var foods = _foodService.GetUserFoods(userId);
+
+            var foodDtos = _mapper.Map<List<FoodItemADto>>(foods);
+            return foodDtos;
         }
 
         // POST api/<FoodController>
         [HttpPost]
         public void Post([FromBody] FoodItem foodItem)
         {
-            foodService.Update(foodItem);
+            _foodService.Update(foodItem);
         }
 
         // PUT api/<FoodController>/5

@@ -10,5 +10,6 @@ namespace FoodDomain.Repositories
     public interface IFoodItemRepo
     {
         FoodRDto GetByName(string name);
+        public Task<List<FoodRDto>> GetFoodsByUserId(long userId);
     }
 }

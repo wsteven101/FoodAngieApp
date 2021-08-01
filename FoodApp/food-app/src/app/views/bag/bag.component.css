@@ -1,3 +1,15 @@
-.bagCard {
-    background-color:lightyellow
+.bag-body {
+    height:fit-content;
+}
+
+.bag-form {
+  margin: 20px;
+  padding: 10px;
+  border-color: lightgray;
+  border: solid;
+  border-width: 1px;
+}
+
+.bag-field {
+    margin: 10px;
 }

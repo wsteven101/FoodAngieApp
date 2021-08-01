@@ -1,4 +1,6 @@
-﻿using FoodDomain.Entities;
+﻿using AutoMapper;
+using FoodApp.DTO;
+using FoodDomain.Entities;
 using FoodDomain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,10 +16,13 @@ namespace FoodApp.Controllers
     [ApiController]
     public class BagController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IBagItemService _bagService;
         
-        public BagController(IBagItemService bagService)
+        public BagController(IBagItemService bagService,
+            IMapper mapper)
         {
+            _mapper = mapper;
             _bagService = bagService;
         }
 
@@ -39,11 +44,20 @@ namespace FoodApp.Controllers
 
         // GET api/<FoodController>/5
         [HttpGet("userbags/{id}")]
-        public async Task<ActionResult<List<BagItem>>> GetUserBags(string id)
+        public async Task<ActionResult<List<BagItemADto>>> GetUserBags(string id)
         {
-            int userId = Int32.Parse(id);
-            var bags = await _bagService.GetBagsByUserId(userId);
-            return bags.ToList();
+            try
+            {
+                int userId = Int32.Parse(id);
+                var bags = (await _bagService.GetBagsByUserId(userId)).ToList();
+
+                var bagDtos =_mapper.Map<List<BagItemADto>>(bags);
+                return bagDtos;
+            }
+            catch(Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // POST api/<BagItem>

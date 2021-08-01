@@ -19,7 +19,8 @@ namespace FoodDomain.IntTest
 
         private IMapper _mapper = new MapperConfiguration(cfg =>
         cfg.AddMaps(new[] {
-                    typeof(AutoMapperProfiles).Assembly
+                    typeof(AutoMapperProfiles).Assembly,
+                    typeof(FoodDomain.DTO.AutoMapperProfiles).Assembly
                 })).CreateMapper();
 
         [SetUp]
@@ -49,11 +50,21 @@ namespace FoodDomain.IntTest
             var bagName = (await context.Bags.FirstOrDefaultAsync())?.Name;
             var bagRepo = new BagRepo(context, _mapper);
 
-            var bagService = new BagItemService(bagRepo);
-            var bag = await bagService .GetByName(bagName);
+            try
+            {
+                var bagService = new BagItemService(bagRepo,_mapper);
+                var bag = await bagService.GetByName(bagName);
 
-            Assert.Greater(bag.Id, 0);
-            Assert.AreEqual(bagName, bag.Name);
+                Assert.Greater(bag.Id, 0);
+                Assert.AreEqual(bagName, bag.Name);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
+
+
         }
 
         [Test]
@@ -70,10 +81,18 @@ namespace FoodDomain.IntTest
             var bagUserId = (await context.Bags.FirstOrDefaultAsync())?.UserId;
             var bagRepo = new BagRepo(context, _mapper);
 
-            var bagService = new BagItemService(bagRepo);
-            var bags = await bagService.GetBagsByUserId(bagUserId.Value);
+            try
+            {
+                var bagService = new BagItemService(bagRepo,_mapper);
+                var bags = await bagService.GetBagsByUserId(bagUserId.Value);
 
-            Assert.Greater(bags.Count, 0);
+                Assert.Greater(bags.Count, 0);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+
         }
     }
 }

@@ -1,22 +1,29 @@
 
-<mat-card>  <mat-card-header>
-    <mat-card-title>
-      {{bag.name}}
-    </mat-card-title>
-    <mat-card-subtitle>
+<mat-card class="bag-card-body">  <mat-card-header>
 
-    </mat-card-subtitle>
+  <mat-card-title class="bag-card-title">
+    {{bag.name}}
+  </mat-card-title>
+
+  <mat-card-subtitle>
+  </mat-card-subtitle>
+
   </mat-card-header>
 
-  <mat-card-content>
+    <mat-card-content class="bag-content">
+      <div>Fat</div><div>{{bag.nutrition.fat}}</div>
+      <div>Sat. Fat</div><div>{{bag.nutrition.saturatedFat}}</div>
+      <div>Sugar</div><div>{{bag.nutrition.sugar}}</div>
+      <div>Salt</div><div>{{bag.nutrition.salt}}</div>
+    </mat-card-content>
 
-  </mat-card-content>
+    <mat-card-actions class="bag-actions">
+      <div class="center">
+        <button mat-button class="bag-view-button" (click)="viewButton(bag.name)">View</button>
+      </div>
+    </mat-card-actions>
 
-  <mat-card-actions>
-
-  </mat-card-actions>
-
-  <mat-card-footer>
+  <mat-card-footer class="card-footer">
 
   </mat-card-footer>
 

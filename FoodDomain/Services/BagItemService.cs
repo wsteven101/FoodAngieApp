@@ -1,4 +1,5 @@
-﻿using FoodDomain.Entities;
+﻿using AutoMapper;
+using FoodDomain.Entities;
 using FoodDomain.Interfaces;
 using FoodDomain.Repositories;
 using System;
@@ -11,26 +12,28 @@ namespace FoodDomain.Services
 {
     public class BagItemService : IBagItemService
     {
-
+        private readonly IMapper _mapper;
         private IBagItemRepo _bagRepo;
 
-        public BagItemService(IBagItemRepo bagRepo)
+        public BagItemService(IBagItemRepo bagRepo, IMapper mapper)
         {
             _bagRepo = bagRepo;
+            _mapper = mapper;
         }
 
 
         public async Task<BagItem> GetByName(string name)
         {
             var bagDto = await _bagRepo.GetByName(name);
+            var bagItem = _mapper.Map<BagItem>(bagDto);
 
-            return new BagItem(bagDto);
+            return bagItem;
         }
 
         public async Task<List<BagItem>> GetBagsByUserId(long userId)
         {
-            var userBagsDtos = await _bagRepo.GetBagsByUserId(userId);
-            var userBagItems = userBagsDtos.Select(b=> new BagItem(b));
+            var userBagsDtos = (await _bagRepo.GetBagsByUserId(userId)).ToList();
+            var userBagItems = _mapper.Map<List<BagItem>>(userBagsDtos);
             return userBagItems.ToList();
         }
 

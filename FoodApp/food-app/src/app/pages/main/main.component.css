@@ -1,0 +1,6 @@
+.main-body {
+    width: stretch;
+    height: stretch;
+    border:solid;
+    border-color:red;
+}
