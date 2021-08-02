@@ -1,7 +1,7 @@
 import { Inject, OnInit } from "@angular/core";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Bag } from '../models/bag'
+import { Bag } from '../models/bag';
 import { Observable } from "rxjs";
 
 @Injectable({

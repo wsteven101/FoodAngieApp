@@ -5,6 +5,7 @@ import { Nutrition } from '../../models/Nutrition';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-bag',
@@ -18,6 +19,7 @@ export class BagComponent implements OnInit {
 
   constructor(
     private bagService: BagService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private fb: FormBuilder) {
 

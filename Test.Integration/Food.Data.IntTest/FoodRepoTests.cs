@@ -58,5 +58,25 @@ namespace Food.Data.IntTest
             Assert.AreEqual(name, item.Name);
         }
 
+        [Test]
+        public async Task test_retrieve_user_foods()
+        {
+            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
+                .UseSqlServer(sqlConnStr)
+                .Options;
+
+            using var context = new FoodAngieContext(contextOptions);
+
+            var userId = (await context.Foods.FirstOrDefaultAsync())?.UserId;
+            var repo = new FoodRepo(context, _mapper);
+
+            Assert.NotNull(userId);
+            var items = await repo.GetFoodsByUserId(userId ?? 0);
+
+            Assert.Greater(items[0].Id, 0);
+            Assert.AreEqual(items[0].UserId, userId);
+        }
+
     }
 }

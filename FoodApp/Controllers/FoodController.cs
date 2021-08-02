@@ -47,7 +47,7 @@ namespace FoodApp.Controllers
         public async Task<List<FoodItemADto>> GetUserFoods(string id)
         {
             int userId = Int32.Parse(id);
-            var foods = _foodService.GetUserFoods(userId);
+            var foods = await _foodService.GetUserFoods(userId);
 
             var foodDtos = _mapper.Map<List<FoodItemADto>>(foods);
             return foodDtos;
