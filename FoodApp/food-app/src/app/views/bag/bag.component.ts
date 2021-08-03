@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../../services/user-service';
+import { NameIdPair } from '../../models/NameIdPair';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-bag',
@@ -14,8 +16,10 @@ import { UserService } from '../../services/user-service';
 })
 export class BagComponent implements OnInit {
 
+  public userFoods$: Observable<Array<NameIdPair>> = new Observable<Array<NameIdPair>>();
   public bag$: Observable<Bag> = new Observable<Bag>();
   public bagFormGroup: FormGroup;
+  public newBag: NameIdPair = new NameIdPair(0,"");
 
   constructor(
     private bagService: BagService,
@@ -33,8 +37,12 @@ export class BagComponent implements OnInit {
 
   }
 
-  public load(bagName: string) {
+  public loadData(bagName: string) {
+    this.loadUserFoods();
+  }
 
+  public loadUserFoods() {
+    this.userFoods$ = this.userService.getAllUserFoodNames("1");
   }
 
   ngOnInit(): void {
@@ -63,8 +71,12 @@ export class BagComponent implements OnInit {
             salt: bag.nutrition.salt
           })
         });
-    }
 
+      this.loadData(bagName);
+    }
   }
 
+  public onBagSelectionChange(event: MatSelectChange) {
+    var namedId = event.value;
+  }
 }

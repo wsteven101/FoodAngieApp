@@ -1,5 +1,5 @@
 .bag-body {
-    height:fit-content;
+    height:stretch;
 }
 
 .bag-form {
@@ -12,4 +12,34 @@
 
 .bag-field {
     margin: 10px;
+}
+
+.bag-edit-contents {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  height: stretch;
+  border: solid;
+  border-color: orange;
+  border-width: 10px;
+}
+
+.bag-food-box {
+  height: stretch;
+  margin: 20px;
+  padding: 10px;
+  border-color: lightgray;
+  border: solid;
+  border-width: 1px;
+}
+
+.one {
+  grid-column: 1;
+  grid-row: 1;
+  height: 200px;
+  border: solid;
+  border-color: pink;
+  border-width: 10px;
+  justify-items: stretch;
+  align-items:end;
 }

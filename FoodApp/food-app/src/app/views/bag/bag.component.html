@@ -27,6 +27,20 @@
     </div>
   </div>
 
+  <div class="bag-edit-contents">
+    <div class="bag-food-box">
+      <mat-form-field appearance="fill">
+        <mat-label>Add Food</mat-label>
+        <mat-select (selectionChange)="onBagSelectionChange($event)">
+          <mat-option *ngFor="let namedId of userFoods$ | async" [value]="newBag">
+            {{namedId.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+</div>
 
 
 

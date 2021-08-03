@@ -1,6 +1,11 @@
 .main-body {
     width: stretch;
     height: stretch;
-    border:solid;
-    border-color:red;
+/*    border:solid;
+    border-color:red;*/
+}
+
+.router-area {
+  width: stretch;
+  height: stretch;
 }
