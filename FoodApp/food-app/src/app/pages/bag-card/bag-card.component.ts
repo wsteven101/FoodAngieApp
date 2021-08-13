@@ -11,7 +11,7 @@ import { Nutrition } from '../../models/Nutrition';
 })
 export class BagCardComponent implements OnInit {
 
-  private _bag: Bag = new Bag(0, "N/A", new Nutrition(0,0,0,0,0));
+  private _bag: Bag = new Bag(0, "N/A");
 
   @Input()
   get bag() { return this._bag }

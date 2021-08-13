@@ -30,13 +30,46 @@
   <div class="bag-edit-contents">
     <div class="bag-food-box">
       <mat-form-field appearance="fill">
-        <mat-label>Add Food</mat-label>
-        <mat-select (selectionChange)="onBagSelectionChange($event)">
-          <mat-option *ngFor="let namedId of userFoods$ | async" [value]="newBag">
+        <mat-label>Add Bag</mat-label>
+        <mat-select (selectionChange)="onBagSelectionChange($event.value)">
+          <mat-option *ngFor="let namedId of userFoods$ | async" [value]="namedId">
             {{namedId.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+
+      <div  class="bag-list">
+        <mat-list  role="list">
+          <!--<mat-list-item>1</mat-list-item>
+    <mat-list-item>2</mat-list-item>-->
+
+          <mat-list-item *ngFor="let bagNode of (bagList$ | async)" class="bag-list-item">
+            {{bagNode.bag.name}}
+            {{bagNode.quantity}}
+            <button>Remove</button>
+          </mat-list-item>
+          <!--{{bagNode.bag.name}}
+    {{bagNode.quantity}}
+    <button>Remove</button>-->
+          <!--Fred
+    </mat-list-item>-->
+        </mat-list>
+      </div>
+
+    </div>
+    
+
+    <div class="bag-food-box">
+      <mat-form-field appearance="fill">
+        <mat-label>Add Food (to do)</mat-label>
+        <mat-select (selectionChange)="onBagSelectionChange($event.value)">
+          <mat-option *ngFor="let namedId of userFoods$ | async" [value]="namedId">
+            {{namedId.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
     </div>
   </div>
 

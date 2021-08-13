@@ -10,6 +10,7 @@ namespace FoodApp.DTO
         public long Id { get; set; }
 
         public string Name { get; init; }
+        public bool UpdateData { get; set; }
 
         public NutritionalContentADto Nutrition { get; init; }
     }

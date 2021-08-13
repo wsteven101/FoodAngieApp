@@ -6,6 +6,9 @@ dotnet add Food.Data package Microsoft.EntityFrameworkCore.SqlServer -v 5.0.0
 dotnet add Food.Data package Microsoft.EntityFrameworkCore.SqlServer -v 5.0.0
 dotnet add FoodApp package  Microsoft.EntityFrameworkCore.Design -v 5.0.0
 dotnet add FoodApp package  Microsoft.EntityFrameworkCore.Design -v 5.0.0
+dotnet add FoodApp/FoodApp.csproj package Azure.Identity
+dotnet add FoodApp/FoodApp.csproj package Azure.Extensions.AspNetCore.Configuration.Secrets
+
 
 dotnet ef migrations add CreateDB --project Food.Data --startup-project FoodApp
 

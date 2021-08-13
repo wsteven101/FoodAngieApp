@@ -3,14 +3,16 @@ using Food.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Food.Data.Migrations
 {
     [DbContext(typeof(FoodAngieContext))]
-    partial class FoodAngieContextModelSnapshot : ModelSnapshot
+    [Migration("20210808102737_Migration3_updatedata_col")]
+    partial class Migration3_updatedata_col
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,9 +187,6 @@ namespace Food.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")

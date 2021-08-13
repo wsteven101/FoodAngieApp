@@ -11,5 +11,6 @@ namespace FoodDomain.Repositories
     {
         FoodRDto GetByName(string name);
         public Task<List<FoodRDto>> GetFoodsByUserId(long userId);
+        public Task<List<FoodRDto>> GetFoods(List<long> foodList);
     }
 }

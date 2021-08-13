@@ -2,6 +2,7 @@
 using FoodApp.DTO;
 using FoodDomain.Entities;
 using FoodDomain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace FoodApp.Controllers
         }
 
         // GET: api/<BagItem>
+        [Authorize]
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -58,6 +60,24 @@ namespace FoodApp.Controllers
             {
                 return NotFound(ex.Message);
             }
+        }
+
+        [HttpPut("fillbag")]
+        public async Task<ActionResult<BagItemADto>> FillBag([FromBody] BagItemADto bagDto)
+        {
+            try
+            {
+                var bag =_mapper.Map<BagItem>(bagDto);
+                await _bagService.FillBag(bag);
+
+                var filledBagDto = _mapper.Map<BagItemADto>(bag);
+                return filledBagDto;
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+
         }
 
         // POST api/<BagItem>

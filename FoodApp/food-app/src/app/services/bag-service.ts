@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Bag } from '../models/bag';
 import { Observable } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,22 @@ export class BagService {
     console.log("Order Repository calling:" + urlStr);
  
     return this.httpClient.get<Array<Bag>>(urlStr,options);
+  }
+
+  public fillBag(bag: Bag): Observable<Bag> {
+
+    //const options = id ? { params: new HttpParams().set('id', id) } : {};
+
+    let urlStr: string = 'http://localhost:54657/api/bag/fillbag/';
+    console.log("Order Repository calling:" + urlStr);
+
+    return this.httpClient.put<Bag>(urlStr, bag)
+      .pipe(
+        e => {
+          console.log("fillBag() failed");
+          return e;
+        });
+    
   }
 
 }

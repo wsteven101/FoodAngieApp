@@ -11,5 +11,7 @@ namespace FoodDomain.Repositories
     {
         public Task<BagRDto> GetByName(string name);
         public Task<List<BagRDto>> GetBagsByUserId(long userId);
+        public Task<List<BagRDto>> GetBags(List<long> bagList);
+        public Task Update(BagRDto bagDto);
     }
 }

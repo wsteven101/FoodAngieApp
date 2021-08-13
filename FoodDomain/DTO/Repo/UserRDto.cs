@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Food.Data.Models
+namespace FoodDomain.DTO.Repo
 {
-    public class User
+    public class UserRDto
     {
         public long Id { get; set; }
         public string UserName { get; set; }

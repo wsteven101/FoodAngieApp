@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Food.Data.Models
+namespace FoodDomain.Entities
 {
     public class User
     {

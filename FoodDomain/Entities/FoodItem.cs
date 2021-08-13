@@ -9,9 +9,9 @@ namespace FoodDomain.Entities
     {
         public long Id { get; set; }
 
-        public string Name { get; init; }
-
-        public NutritionalContent Nutrition { get; init; }
+        public string Name { get; set; }
+        public bool UpdateData { get; set; } = false;
+        public NutritionalContent Nutrition { get; set; }
 
     }
 

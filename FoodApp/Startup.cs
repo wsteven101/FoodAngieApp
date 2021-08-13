@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 using FoodDomain.Services;
 
@@ -18,6 +19,11 @@ using Food.Data.Data;
 using AutoMapper;
 using Food.Data.Repos;
 using FoodDomain.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using FoodApp.Interfaces;
+using FoodApp.Services;
 
 namespace FoodApp
 {
@@ -34,16 +40,24 @@ namespace FoodApp
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
+        {
+            services.AddSingleton<IKeyStore, ConfigKeyStore>();
+            services.AddSingleton<IEncryptionService, AESEncryptionService>();
+
             services.AddScoped<IFoodItemService, FoodItemService>();
             services.AddScoped<IBagItemService, BagItemService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddScoped<IBagItemRepo, BagRepo>();
             services.AddScoped<IFoodItemRepo, FoodRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
+
 
             services.AddControllersWithViews();
             services.AddSwaggerGen();
             services.AddDbContext<FoodAngieContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FoodAngieConnection")));
-            
+
             var configuration = new MapperConfiguration(cfg =>
                 cfg.AddMaps(new[] {
                     "Food.Data"
@@ -65,6 +79,61 @@ namespace FoodApp
                                   });
             });
 
+            /* from code mag
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    
+                    options.TokenValidationParameters =
+                    new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+            */
+
+            //config.JwtToken.Issuer = "https://mysite.com";
+            //config.JwtToken.Audience = "https://mysite.com";
+            //config.JwtToken.SigningKey = "12345@4321";  //  some long id
+
+            services.AddSession();
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                //x.RequireHttpsMetadata = true;
+                var jwtConfig = Configuration.GetSection("Jwt");
+                var jwtIssuer = jwtConfig["Issuer"].ToString();
+                var jwtAudience = jwtConfig["Audience"].ToString();
+
+                 // probably need to move this code into a class
+                 // accepting the IKeyStore to retrieve the key
+                 // in a common manner
+                var jwtKey = Configuration["Keys:JwtKey"].ToString();
+
+                //x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtIssuer,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtKey)),
+                    ValidAudience = jwtAudience,
+                    ValidateAudience = true
+                    //ValidateLifetime = true,
+                    //ClockSkew = TimeSpan.FromMinutes(1)
+                };
+            });
+
             // In production, the React files will be served from this directory
 
             // add this and package  Microsoft.AspNetCore.SpaServices.Extensions
@@ -74,7 +143,9 @@ namespace FoodApp
             //});
 
 
+
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -101,6 +172,18 @@ namespace FoodApp
                 app.UseHsts();
             }
 
+            // authorisation
+            app.UseSession();
+            app.Use(async (context, next) =>
+            {
+                var token = context.Session.GetString("Token");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    context.Request.Headers.Add("Authorization", "Bearer" + token);
+                }
+                await next();
+            });
+
             // removed redirect for docker so that it doesn't need a https certificate
             // which for a real scenario it should have
             //app.UseHttpsRedirection();
@@ -108,7 +191,11 @@ namespace FoodApp
             //app.UseSpaStaticFiles(); // add for react
             app.UseRouting();
 
+            // authentication
+
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -3,14 +3,16 @@ using Food.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Food.Data.Migrations
 {
     [DbContext(typeof(FoodAngieContext))]
-    partial class FoodAngieContextModelSnapshot : ModelSnapshot
+    [Migration("20210812150506_Migration4_update_user")]
+    partial class Migration4_update_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

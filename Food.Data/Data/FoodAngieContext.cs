@@ -11,6 +11,10 @@ namespace Food.Data.Data
 {
     public class FoodAngieContext : DbContext
     {
+        // example migration & update cmds from solution dir
+        // dotnet ef migrations add Migration3_updatedata_col --project Food.Data --verbose --startup-project FoodApp
+        // dotnet ef database update --project Food.Data --startup-project FoodApp
+
         public DbSet<FoodItem> Foods { get; set; }
         public DbSet<Bag> Bags { get; set; }
         public DbSet<User> Users { get; set; }
@@ -26,8 +30,8 @@ namespace Food.Data.Data
                 new FoodItem { Id = 3, Name = "Twisted Creme", UserId = 2, NutritionId = 3 });
 
             modelBuilder.Entity<Bag>().ToTable("Bag").HasData(
-                new Bag { Id=1, Name="Milky Bag", UserId=1, NutritionId=4 },
-                new Bag { Id=2, Name="Mixed Bag", UserId=2, NutritionId=5});
+                new Bag { Id=1, Name="Milky Bag", UserId=1, UpdateData=false, NutritionId=4 },
+                new Bag { Id=2, Name="Mixed Bag", UserId=2, UpdateData=false, NutritionId=5});
 
             modelBuilder.Entity<User>().ToTable("User").HasData(
                 new User { Id=2, FirstName="John", Surname="Smith", UserName="Jonny" },

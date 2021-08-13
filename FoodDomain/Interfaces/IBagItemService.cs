@@ -12,6 +12,7 @@ namespace FoodDomain.Interfaces
     {
         public Task<List<BagItem>> GetBagsByUserId(long userId);
         public Task<BagItem> GetByName(string name);
-        public void Update(BagItem foodItem);
+        public Task FillBag(BagItem bag);
+        public Task Update(BagItem foodItem);
     }
 }

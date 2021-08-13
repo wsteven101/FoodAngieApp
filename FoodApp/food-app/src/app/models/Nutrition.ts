@@ -1,9 +1,9 @@
 export class Nutrition {
   constructor(
-    public id: number,
-    public fat: number,
-    public saturatedFat: number,
-    public sugar: number,
-    public salt: number
+    public id: number = 0,
+    public fat: number = 0,
+    public saturatedFat: number = 0,
+    public sugar: number = 0,
+    public salt: number = 0
   ) { }
 }

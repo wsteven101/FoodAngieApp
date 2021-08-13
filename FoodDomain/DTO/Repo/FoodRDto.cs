@@ -12,6 +12,7 @@ namespace FoodDomain.DTO.Repo
         public long Id { get; set; }
         public long UserId { get; set; }
         public string Name { get; set; }
+        public bool UpdateData { get; set; }
         public long NutritionId { get; set; }
         public NutritionRDto Nutrition { get; set; }
     }

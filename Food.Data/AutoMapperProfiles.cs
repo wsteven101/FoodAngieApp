@@ -13,9 +13,14 @@ namespace Food.Data
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Bag, BagRDto>();
-            CreateMap<FoodItem, FoodRDto>();
-            CreateMap<Nutrition, NutritionRDto>();
+            CreateMap<Bag, BagRDto>().ReverseMap();
+            CreateMap<FoodItem, FoodRDto>().ReverseMap();
+            CreateMap<Nutrition, NutritionRDto>().ReverseMap();
+            CreateMap<User, UserRDto>().ReverseMap();
+
+            //CreateMap<BagRDto, Bag>();
+            //CreateMap<FoodRDto, FoodItem>();
+            //CreateMap<NutritionRDto, Nutrition>();
         }
     }
 }

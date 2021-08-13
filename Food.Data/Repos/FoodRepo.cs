@@ -52,5 +52,17 @@ namespace Food.Data.Repos
 
             return userItemDtos;
         }
+
+        public async Task<List<FoodRDto>> GetFoods(List<long> foodList)
+        {
+            var bags = await _foodAngieContext.Foods
+                .Include(b => b.Nutrition)
+                .Where(b => foodList.Contains(b.Id))
+                .ToListAsync();
+
+            var foodDtos = _mapper.Map<List<FoodRDto>>(bags);
+            return foodDtos;
+        }
+
     }
 }
