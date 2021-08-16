@@ -45,6 +45,11 @@ namespace FoodApp.Controllers
         }
 
         // GET api/<FoodController>/5
+        /// <summary>
+        /// Returns all the bags owned by a specific user
+        /// </summary>
+        /// <param name="id">User Id (not user name)</param>
+        /// <returns></returns>
         [HttpGet("userbags/{id}")]
         public async Task<ActionResult<List<BagItemADto>>> GetUserBags(string id)
         {

@@ -44,6 +44,7 @@ namespace FoodApp.Controllers
             return food;
         }
 
+        [HttpGet("GetUserFoods/{id}")]
         public async Task<List<FoodItemADto>> GetUserFoods(string id)
         {
             int userId = Int32.Parse(id);

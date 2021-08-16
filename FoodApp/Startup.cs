@@ -24,6 +24,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using FoodApp.Interfaces;
 using FoodApp.Services;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace FoodApp
 {
@@ -55,7 +58,20 @@ namespace FoodApp
 
 
             services.AddControllersWithViews();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Food App Angie API",
+                    Version = "v1",
+                    Description = "API for the app FoodAppAngie"
+                });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
             services.AddDbContext<FoodAngieContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FoodAngieConnection")));
 
             var configuration = new MapperConfiguration(cfg =>
@@ -158,7 +174,10 @@ namespace FoodApp
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
+                 // make sure all end points have an HttpGet/Put etc
+                 // as otherwise swagger may not work, check output for exceptions
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
             });
 
             if (env.IsDevelopment())
