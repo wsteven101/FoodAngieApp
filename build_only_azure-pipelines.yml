@@ -65,7 +65,7 @@ stages:
         displayName: Replace windows 'xcopy' with linux 'cp' command
         inputs: 
           targetType: inline
-          script: sed 's/xcopy/cp/gi'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
+          script: sed -i 's/xcopy/cp/gi'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
       - task: DotNetCoreCLI@2
         displayName: Restore
         inputs: 
