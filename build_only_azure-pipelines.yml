@@ -61,10 +61,15 @@ stages:
         inputs:
           script: 'npm install'
           workingDirectory: ./FoodApp/food-app       
+      - task: Bash@3
+        displayName: Replace windows 'xcopy' with linux 'cp' command
+        inputs: 
+          targetType: inline
+          script: sed 's/xcopy/cp/gi'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
       - task: DotNetCoreCLI@2
         displayName: Restore
         inputs: 
-          command: restore 
+          command: restore           
       - task: DotNetCoreCLI@2
         displayName: 'Build $(buildConfiguration)'
         inputs:
