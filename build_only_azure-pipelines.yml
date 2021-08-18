@@ -1,0 +1,128 @@
+#######################################################################################################
+#
+# Build a web app, containerise it with docker, push to the registry 
+# and then deploy to a kubernetes cluster
+#
+# The Kubernetes cluster must be created before running this pipeline.
+# This can be created with the following azure command from an azure cloud shell:
+#
+#     az aks create --resource-group FoodApp --name FoodAppKube1 --node-count 1 --enable-addons monitoring --generate-ssh-keys --attach-acr FoodAppRegistry
+#
+# Note that the pipeline expects
+# 1) A Kubernetes service connection
+# 2) A dockers secret named 'food-app-secret' with which to acces the docker registry
+#
+######################################################################################################
+
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  deploymentenvirnoment: 'DEV'
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'c6eb8dd7-a558-4fef-8cf8-51e9e873c43b'
+  imageRepository: 'wstevenfoodapp'
+  containerRegistry: 'foodappregistry.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  snapversion: '1st snap version'
+  imageName: food-app
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+
+# Build the .Net solution, containerise it and push to an Azure docker registry
+
+  - job: Build
+    displayName: Build
+    
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - bash: echo "snap version is $(snapversion) "; pwd 
+        displayName: 'output snap version'
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '6.x'
+          checkLatest: true
+      - task: CmdLine@2
+        inputs:
+          script: 'npm install'
+          workingDirectory: ./FoodApp/food-app       
+      - task: DotNetCoreCLI@2
+        displayName: Restore
+        inputs: 
+          command: restore 
+      - task: DotNetCoreCLI@2
+        displayName: 'Build $(buildConfiguration)'
+        inputs:
+          command: build
+          arguments: '--configuration $(buildConfiguration)'
+
+      - task: DotNetCoreCLI@2
+        displayName: Run Tests
+        inputs: 
+          command: test
+          arguments: '--configuration $(buildConfiguration)'
+
+      - task: Bash@3
+        displayName: copying kubernetes config file to build output
+        inputs:
+          targetType: inline
+          script: cp ./food-system.yaml  $(Build.ArtifactStagingDirectory); pwd; ls -R; ls $(Build.ArtifactStagingDirectory)
+
+      - task: DotNetCoreCLI@2
+        displayName: Publish Build
+        inputs:
+          command: publish
+          publishWebProjects: false
+          arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+          zipAfterPublish: True
+
+      - task: Docker@2
+        displayName: Login to Docker Repo
+        inputs:
+          command: login
+          containerRegistry: FoodAppRegistry
+
+        # tag the image with both 'latest' and the build number
+      - task: Docker@2
+        displayName: Building Docker Image
+        inputs: 
+          containerRegistry: FoodAppRegistry
+          repository: $(imageName)
+          command: build
+          Dockerfile: Dockerfile
+          tags: |
+            $(tag)
+            latest
+        
+        # push both images 'latest' and image with the build number
+      - task: Docker@2
+        displayName: Push Docker Image
+        inputs: 
+          containerRegistry: FoodAppRegistry
+          repository: $(imageName)
+          command: push
+          tags: |
+            $(tag)
+            latest          
+ 
+      - task: PublishBuildArtifacts@1
+        displayName: Publish Artifact
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'manifests'
+          
