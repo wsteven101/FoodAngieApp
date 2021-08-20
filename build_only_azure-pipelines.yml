@@ -68,10 +68,11 @@ stages:
           script: |
             pwd; 
             ls -l ./Test.Integration; 
-            sed -i 's/xcopy/cp/gi'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
-            sed -i 's/\/Y//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
-            sed -i 's/\/\//\//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
-            ls -l ./Test.Integration/../FoodApp/appSettings*.json
+            ls -l ./Test.Integration/../FoodApp/ #appSettings*.json
+            #sed -i 's/xcopy/cp/gi'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
+            #sed -i 's/\/Y//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
+            #sed -i 's/\/\//\//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
+            #ls -l ./Test.Integration/../FoodApp/ #appSettings*.json
           
       - task: DotNetCoreCLI@2
         displayName: Restore
