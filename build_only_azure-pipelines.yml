@@ -68,7 +68,10 @@ stages:
           script: |
             pwd; 
             ls -l ./Test.Integration; 
-            ls -l ./Test.Integration/../FoodApp/ #appSettings*.json
+            echo "Part 2";
+            ls -l ./Test.Integration/../FoodApp/appSettings.json;
+            echo "Part 3";
+            ls -l './Test.Integration/../FoodApp/appSettings*.json';
             #sed -i 's/xcopy/cp/gi'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             #sed -i 's/\/Y//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             #sed -i 's/\/\//\//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
