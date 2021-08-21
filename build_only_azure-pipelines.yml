@@ -66,15 +66,15 @@ stages:
         inputs: 
           targetType: inline
           script: |
-            pwd; 
-            ls -l ./Test.Integration; 
-            echo "part 1"
-            ls -l ./Test.Integration/../FoodApp/
-            echo "Part 2";
-            ls -l ./Test.Integration/../FoodApp/appsettings.json;
-            echo "Part 3";
-            ls -l './Test.Integration/../FoodApp/appsettings*.json';
-            sed -i 's/xcopy.*$\"/cp .\/Test.Integration\/..\/FoodApp\/appsettings*.json .\/Test.Integration\/FoodData.IntTest\"/'   ./Test.Integration/FoodData.IntTest/FoodData.IntTest.csproj; 
+            #pwd; 
+            #ls -l ./Test.Integration; 
+            #echo "part 1"
+            #ls -l ./Test.Integration/../FoodApp/
+            #echo "Part 2";
+            #ls -l ./Test.Integration/../FoodApp/appsettings.json;
+            #echo "Part 3";
+            #ls -l './Test.Integration/../FoodApp/appsettings*.json';
+            sed -i 's/xcopy.*$\"/cp .\/Test.Integration\/..\/FoodApp\/appsettings*.json .\/Test.Integration\/Food.Data.IntTest\"/'   ./Test.Integration/Food.Data.IntTest/Food.Data.IntTest.csproj; 
             sed -i 's/xcopy.*$\"/cp .\/Test.Integration\/..\/FoodApp\/appsettings*.json .\/Test.Integration\/FoodDomain.IntTest\"/'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             #sed -i 's/\/Y//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             #sed -i 's/\/\//\//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
