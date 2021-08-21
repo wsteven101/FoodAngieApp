@@ -74,7 +74,7 @@ stages:
             ls -l ./Test.Integration/../FoodApp/appsettings.json;
             echo "Part 3";
             ls -l './Test.Integration/../FoodApp/appsettings*.json';
-            sed -i 's/xcopy.*$/cp .\/Test.Integration\/..\/FoodApp\/appsettings.json .\/Test.Integration\/'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
+            sed -i 's/xcopy.*$/cp .\/Test.Integration\/..\/FoodApp\/appsettings*.json .\/Test.Integration\//'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             #sed -i 's/\/Y//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             #sed -i 's/\/\//\//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
             #ls -l ./Test.Integration/../FoodApp/ #appSettings*.json
