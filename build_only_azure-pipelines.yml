@@ -66,21 +66,10 @@ stages:
         inputs: 
           targetType: inline
           script: |
-            #pwd; 
-            #ls -l ./Test.Integration; 
-            #echo "part 1"
-            #ls -l ./Test.Integration/../FoodApp/
-            #echo "Part 2";
-            #ls -l ./Test.Integration/../FoodApp/appsettings.json;
-            #echo "Part 3";
-            #ls -l './Test.Integration/../FoodApp/appsettings*.json';
             sed -i 's/xcopy.*\"/cp $(ProjectDir)\/..\/..\/FoodApp\/appsettings*.json $(ProjectDir)\"/'   ./Test.Integration/Food.Data.IntTest/Food.Data.IntTest.csproj; 
             sed -i 's/xcopy.*\"/cp $(ProjectDir)\/..\/..\/FoodApp\/appsettings*.json $(ProjectDir)\"/'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             cat ./Test.Integration/Food.Data.IntTest/Food.Data.IntTest.csproj; 
             cat ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
-            #sed -i 's/\/Y//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
-            #sed -i 's/\/\//\//g' ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj
-            #ls -l ./Test.Integration/../FoodApp/ #appSettings*.json
           
       - task: DotNetCoreCLI@2
         displayName: Restore
