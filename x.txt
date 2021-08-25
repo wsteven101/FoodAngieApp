@@ -1,0 +1,2 @@
+    <Exec Command="cp ./Test.Integration/../FoodApp/appsettings*.json ./Test.Integration/Food.Data.IntTest" />
+

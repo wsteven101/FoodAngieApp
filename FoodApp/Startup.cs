@@ -72,7 +72,12 @@ namespace FoodApp
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddDbContext<FoodAngieContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FoodAngieConnection")));
+            services.AddDbContext<FoodAngieContext>(
+                
+                options => {
+                    var testStr = Configuration.GetConnectionString("FoodAngieConnection");
+                    options.UseSqlServer(Configuration.GetConnectionString("FoodAngieConnection"));
+                    }); ; ;
 
             var configuration = new MapperConfiguration(cfg =>
                 cfg.AddMaps(new[] {
