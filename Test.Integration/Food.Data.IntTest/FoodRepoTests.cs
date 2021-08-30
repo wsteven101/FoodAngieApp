@@ -9,6 +9,7 @@ using AutoMapper;
 using Food.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Food.Data.IntTest.Utils;
 
 namespace Food.Data.IntTest
 {
@@ -61,7 +62,7 @@ namespace Food.Data.IntTest
         [Test]
         public async Task test_retrieve_user_foods()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using System;
 using System.Threading.Tasks;
+using Food.Data.IntTest.Utils;
 
 namespace Food.Data.IntTest
 {
@@ -42,7 +43,8 @@ namespace Food.Data.IntTest
         //[TestCase("Milky Way")]
         public async Task test_read_Bag_repo()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
+
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
@@ -60,7 +62,7 @@ namespace Food.Data.IntTest
         [Test]
         public async Task test_read_user_bags()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
