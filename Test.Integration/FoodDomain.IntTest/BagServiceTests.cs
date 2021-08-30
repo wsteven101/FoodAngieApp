@@ -43,7 +43,6 @@ namespace FoodDomain.IntTest
         public async Task Test_Bag_GetByName()
         {
             var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
-            sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
@@ -73,7 +72,6 @@ namespace FoodDomain.IntTest
         public async Task Test_GetBagsByUserId()
         {
             var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
-            sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
@@ -103,7 +101,6 @@ namespace FoodDomain.IntTest
         {
 
             var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
-            sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
@@ -174,7 +171,6 @@ namespace FoodDomain.IntTest
         public async Task Test_Bag_Update()
         {
             var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
-            sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
