@@ -70,11 +70,6 @@ stages:
             sed -i 's/xcopy.*\"/cp $(ProjectDir)\/..\/..\/FoodApp\/appsettings*.json $(ProjectDir)\"/'   ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
             cat ./Test.Integration/Food.Data.IntTest/Food.Data.IntTest.csproj; 
             cat ./Test.Integration/FoodDomain.IntTest/FoodDomain.IntTest.csproj; 
-          
-      - task: AzureKeyVault@2
-        inputs:
-          azureSubscription: 'Azure Subscription (upgraded from free plan)'
-          KeyVaultName: 'FoodAppVault'
 
       - task: DotNetCoreCLI@2
         displayName: Restore
