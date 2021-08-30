@@ -32,7 +32,13 @@ namespace Food.Data.IntTest.Utils
         private  string GetSecret(string configName)
         {
             string keyVaultUrl = "https://foodappvault.vault.azure.net";
-            var client = new SecretClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
+            string userAssignedClientId = "steve@stevew.eu";
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+
+
+            var client = new SecretClient(
+                vaultUri: new Uri(keyVaultUrl), 
+                credential: credential);
 
             try
             {

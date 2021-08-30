@@ -44,7 +44,7 @@ namespace Food.Data.IntTest
         [Test]
         public async Task test_food_retrieval()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
                 .Options;
