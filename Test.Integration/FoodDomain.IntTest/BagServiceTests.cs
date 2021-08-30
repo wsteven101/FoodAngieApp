@@ -12,6 +12,7 @@ using Food.Data;
 using FoodDomain.Services;
 using System.Linq;
 using FoodDomain.Entities;
+using Food.Data.IntTest.Utils;
 
 namespace FoodDomain.IntTest
 {
@@ -41,7 +42,7 @@ namespace FoodDomain.IntTest
         [Test]
         public async Task Test_Bag_GetByName()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
@@ -71,7 +72,7 @@ namespace FoodDomain.IntTest
         [Test]
         public async Task Test_GetBagsByUserId()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
@@ -101,7 +102,7 @@ namespace FoodDomain.IntTest
         public async Task test_fill_out_bag()
         {
 
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)
@@ -172,7 +173,7 @@ namespace FoodDomain.IntTest
         [Test]
         public async Task Test_Bag_Update()
         {
-            var sqlConnStr = _configuration.GetConnectionString("FoodAngieConnection");
+            var sqlConnStr = new TestConfig().GetConfigConnectionString("FoodAngieConnection");
             sqlConnStr = "Data Source=(localdb)\\ProjectsV13;Initial Catalog=FoodAngie;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             var contextOptions = new DbContextOptionsBuilder<FoodAngieContext>()
                 .UseSqlServer(sqlConnStr)

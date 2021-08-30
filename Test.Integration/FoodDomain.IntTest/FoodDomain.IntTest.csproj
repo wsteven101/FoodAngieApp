@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Food.Data\Food.Data.csproj" />
     <ProjectReference Include="..\..\FoodDomain\FoodDomain.csproj" />
+    <ProjectReference Include="..\Food.Data.IntTest\Food.Data.IntTest.csproj" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
