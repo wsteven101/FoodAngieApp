@@ -11,6 +11,8 @@
 # Note that the pipeline expects
 # 1) A Kubernetes service connection
 # 2) A dockers secret named 'food-app-secret' with which to acces the docker registry
+# 3) A Service Connection of type Azure Resource Manager called 'FoodAppSubscription' which points 
+#    to the azure subcription and the relevant resource group under which the Kubernetes service has been created
 #
 ######################################################################################################
 
@@ -228,7 +230,7 @@ stages:
               namespace: default
               command: expose
               arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
-              azureSubscriptionEndpointForSecrets: 'AzureFreeSubscription'
+              azureSubscriptionEndpointForSecrets: 'FoodAppSubscription'
               azureContainerRegistry: foodappregistry.azurecr.io
               secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
 
