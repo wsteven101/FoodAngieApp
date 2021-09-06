@@ -228,7 +228,7 @@ stages:
               namespace: default
               command: expose
               arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
-              azureSubscriptionEndpointForSecrets: 'Azure Subscription (upgraded from free plan) (dabf6320-db56-447e-86c4-bb677d87a890)'
+              azureSubscriptionEndpointForSecrets: 'AzureFreeSubscription'
               azureContainerRegistry: foodappregistry.azurecr.io
               secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
 
