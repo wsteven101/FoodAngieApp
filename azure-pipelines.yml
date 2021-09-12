@@ -201,7 +201,7 @@ stages:
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'K8 FoodApp V5'
+              kubernetesServiceConnection: 'K8 FoodApp V6'
               namespace: 'default'
               #20210912 manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
               containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
@@ -225,28 +225,28 @@ stages:
 
 # Expose the port has not already been exposed (i.e. run if job 'checkPort' ddn't find the service already)
 
-   - deployment: exposeport
+#   - deployment: exposeport
 #     dependsOn: checkPort
-     condition: failed()   
-     displayName: expose port
-     environment: $(deploymentenvirnoment)
-
-     strategy:
-      runOnce:   #rolling, canary are the other strategies that are supported
-        deploy:
-          steps:
-
-          - task: Kubernetes@1
-            displayName: 'kubectl expose'
-            continueOnError: true
-            inputs:
-              kubernetesServiceEndpoint: 'K8 FoodApp V4'
-              namespace: default
-              command: expose
-              arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
-              azureSubscriptionEndpointForSecrets: 'FoodAppSubscription'
-              azureContainerRegistry: foodappregistry.azurecr.io
-              secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
+#     condition: failed()   
+#     displayName: expose port
+#     environment: $(deploymentenvirnoment)
+#
+#     strategy:
+#      runOnce:   #rolling, canary are the other strategies that are supported
+#        deploy:
+#          steps:
+#
+#          - task: Kubernetes@1
+#            displayName: 'kubectl expose'
+#            continueOnError: true
+#            inputs:
+#              kubernetesServiceEndpoint: 'K8 FoodApp V4'
+#              namespace: default
+#              command: expose
+#              arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
+#              azureSubscriptionEndpointForSecrets: 'FoodAppSubscription'
+#              azureContainerRegistry: foodappregistry.azurecr.io
+#              secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
 
 
     
