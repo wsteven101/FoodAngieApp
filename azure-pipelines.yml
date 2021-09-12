@@ -209,19 +209,19 @@ stages:
 
 # Check if the pod's port has already been exposed by looking for the service food-app-deploy-http2
 
-   - job: checkPort
-     displayName: check for port
-     dependsOn: deployK8
-     steps:       
-          - task: Kubernetes@1
-            inputs:
-              connectionType: 'Kubernetes Service Connection'
-              kubernetesServiceEndpoint: 'K8 FoodApp V5'
-              namespace: 'default'
-              command: 'get'
-              arguments: 'service food-app-deploy-http2'
-              secretType: 'dockerRegistry'
-              containerRegistryType: 'Azure Container Registry'
+#   - job: checkPort
+#     displayName: check for port
+#     dependsOn: deployK8
+#     steps:       
+#          - task: Kubernetes@1
+#            inputs:
+#              connectionType: 'Kubernetes Service Connection'
+#              kubernetesServiceEndpoint: 'K8 FoodApp V5'
+#              namespace: 'default'
+#              command: 'get'
+#              arguments: 'service food-app-deploy-http2'
+#              secretType: 'dockerRegistry'
+#              containerRegistryType: 'Azure Container Registry'
 
 # Expose the port has not already been exposed (i.e. run if job 'checkPort' ddn't find the service already)
 
