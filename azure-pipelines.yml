@@ -201,7 +201,7 @@ stages:
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'K8FoodAppV10'
+              kubernetesServiceConnection: 'K8FoodAppV5'
               namespace: 'default'
               #20210912 manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
               #20210912 containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
