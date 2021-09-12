@@ -226,7 +226,7 @@ stages:
 # Expose the port has not already been exposed (i.e. run if job 'checkPort' ddn't find the service already)
 
    - deployment: exposeport
-     dependsOn: checkPort
+#     dependsOn: checkPort
      condition: failed()   
      displayName: expose port
      environment: $(deploymentenvirnoment)
