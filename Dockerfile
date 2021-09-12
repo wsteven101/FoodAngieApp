@@ -82,7 +82,8 @@ RUN npm run build
 RUN echo "end of npm run build"
 
 RUN mkdir /app/publish/ClientApp
-RUN cp -R /src/FoodApp/food-app/build/* /app/publish/ClientApp
+#20210912 RUN cp -R /src/FoodApp/food-app/build/* /app/publish/ClientApp
+RUN cp -R /src/FoodApp/food-app/dist/* /app/publish/ClientApp
 
 FROM base AS publish
 

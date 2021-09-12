@@ -32,7 +32,7 @@ namespace Food.Data.IntTest.Utils
         private  string GetSecret(string configName)
         {
             string keyVaultUrl = "https://foodappvault.vault.azure.net";
-            string userAssignedClientId = "FoodAngie Pipeline";
+            string userAssignedClientId = "xxxx";
             var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
 
 
