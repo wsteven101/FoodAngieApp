@@ -204,8 +204,8 @@ stages:
               kubernetesServiceConnection: 'K8 FoodApp V5'
               namespace: 'default'
               #20210912 manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
-              containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
-              imagePullSecrets: 'food-app-secret'
+              #20210912 containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
+              #20210912 imagePullSecrets: 'food-app-secret'
 
 # Check if the pod's port has already been exposed by looking for the service food-app-deploy-http2
 
