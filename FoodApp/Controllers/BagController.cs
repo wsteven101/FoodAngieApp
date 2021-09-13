@@ -28,7 +28,6 @@ namespace FoodApp.Controllers
         }
 
         // GET: api/<BagItem>
-        [Authorize]
         [HttpGet]
         public IEnumerable<string> Get()
         {
