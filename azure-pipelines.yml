@@ -161,7 +161,7 @@ stages:
               ls -R
             displayName: 'List dir contents'
 
-
+          # download the latest build, built in a previous task
           - task: DownloadBuildArtifacts@1
             inputs:
               buildType: 'current'
@@ -173,6 +173,7 @@ stages:
               ls -R
             displayName: 'List dir contents'
 
+          # download and extract the K8 yaml file ready for the K8 deployment task
           - task: ExtractFiles@1
             displayName: 'Extract files '
             inputs:
@@ -201,52 +202,52 @@ stages:
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'K8FoodAppV5'
+              kubernetesServiceConnection: 'K8 FoodApp V5'
               namespace: 'default'
-              #20210912 manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
-              #20210912 containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
-              #20210912 imagePullSecrets: 'food-app-secret'
+              manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
+              containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
+              imagePullSecrets: 'food-app-secret'
 
 # Check if the pod's port has already been exposed by looking for the service food-app-deploy-http2
 
-#   - job: checkPort
-#     displayName: check for port
-#     dependsOn: deployK8
-#     steps:       
-#          - task: Kubernetes@1
-#            inputs:
-#              connectionType: 'Kubernetes Service Connection'
-#              kubernetesServiceEndpoint: 'K8 FoodApp V5'
-#              namespace: 'default'
-#              command: 'get'
-#              arguments: 'service food-app-deploy-http2'
-#              secretType: 'dockerRegistry'
-#              containerRegistryType: 'Azure Container Registry'
+   - job: checkPort
+     displayName: check for port
+     dependsOn: deployK8
+     steps:       
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceEndpoint: 'K8 FoodApp V5'
+              namespace: 'default'
+              command: 'get'
+              arguments: 'service food-app-deploy-http2'
+              secretType: 'dockerRegistry'
+              containerRegistryType: 'Azure Container Registry'
 
 # Expose the port has not already been exposed (i.e. run if job 'checkPort' ddn't find the service already)
 
-#   - deployment: exposeport
-#     dependsOn: checkPort
-#     condition: failed()   
-#     displayName: expose port
-#     environment: $(deploymentenvirnoment)
-#
-#     strategy:
-#      runOnce:   #rolling, canary are the other strategies that are supported
-#        deploy:
-#          steps:
-#
-#          - task: Kubernetes@1
-#            displayName: 'kubectl expose'
-#            continueOnError: true
-#            inputs:
-#              kubernetesServiceEndpoint: 'K8 FoodApp V4'
-#              namespace: default
-#              command: expose
-#              arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
-#              azureSubscriptionEndpointForSecrets: 'FoodAppSubscription'
-#              azureContainerRegistry: foodappregistry.azurecr.io
-#              secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
+   - deployment: exposeport
+     dependsOn: checkPort
+     condition: failed()   
+     displayName: expose port
+     environment: $(deploymentenvirnoment)
+
+     strategy:
+      runOnce:   #rolling, canary are the other strategies that are supported
+        deploy:
+          steps:
+
+          - task: Kubernetes@1
+            displayName: 'kubectl expose'
+            continueOnError: true
+            inputs:
+              kubernetesServiceEndpoint: 'K8 FoodApp V5'
+              namespace: default
+              command: expose
+              arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
+              azureSubscriptionEndpointForSecrets: 'FoodAppSubscription'
+              azureContainerRegistry: foodappregistry.azurecr.io
+              secretName: '2842ba3a-9ef1-4065-9c35-d1ba2a7a77d5'
 
 
     
