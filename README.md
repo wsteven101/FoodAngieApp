@@ -17,3 +17,5 @@ For Integration Tests
 dotnet add Food.Data.IntTest package Microsoft.Extensions.Configuration.FileExtensions --version 5.0.0
 dotnet add Food.Data.IntTest package Microsoft.Extensions.Configuration.Json --version 5.0.0
 dotnet add Food.Data.IntTest package Microsoft.Extensions.Configuration.EnvironmentVariables --version 5.0.0
+dotnet add Test.Integration/Food.Data.IntTest package  Azure.Identity
+

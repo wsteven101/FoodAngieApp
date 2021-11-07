@@ -1,0 +1,16 @@
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentity
+metadata:
+  name: "aks-kv-identity"               
+spec:
+  type: 0                                 
+  resourceID: /subscriptions/dabf6320-db56-447e-86c4-bb677d87a890/resourcegroups/FoodApp/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks2kvIdentity
+  clientID: 9ee5e807-d3b9-43ea-8650-fbc802f110c5
+---
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentityBinding
+metadata:
+  name: azure-pod-identity-binding
+spec:
+  azureIdentity: "aks-kv-identity"      
+  selector: azure-pod-identity-binding-selector

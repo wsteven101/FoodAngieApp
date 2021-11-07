@@ -30,12 +30,4 @@ spec:
                   ports:
                   - containerPort: 5000
             imagePullSecrets:
-                - name: regcred                  
- #           volumes:
- #               - name: credvol
- #                 secret:
- #                      secretName: regcred2                  
- #           imagePullSecrets:
- #               - name: regcred2           
-
-#                  command: [ "echo", "SUCCESS" ]
+                - name: regcred  
