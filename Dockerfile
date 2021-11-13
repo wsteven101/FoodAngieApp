@@ -53,6 +53,7 @@ RUN apt install -y nodejs
 WORKDIR /src/FoodApp/food-app
 RUN npm install react-router-dom
 RUN npm install @types/react-router-dom
+RUN npm install @types/react @types/react-native
 
 # finish npm and package install
 
