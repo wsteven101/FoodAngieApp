@@ -43,7 +43,7 @@ RUN apt-get install -y gnupg
 RUN apt-get install -y gnupg1
 RUN apt-get install -y gnupg2
 
-RUN wget  https://deb.nodesource.com/setup_12.x
+RUN wget  https://deb.nodesource.com/setup_17.x
 RUN echo 'deb https://deb.nodesource.com/node_12.x  stretch  main' > /etc/apt/sources.list.d/nodesource.list
 RUN wget -qO - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 
