@@ -207,7 +207,7 @@ stages:
           - task: KubernetesManifest@0
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'K8FoodAppV5'
+              kubernetesServiceConnection: 'K8FoodAppV7'
               namespace: 'default'
               manifests: '$(System.DefaultWorkingDirectory)/_wsteven101.FoodApp/artifact/food-system.yaml'
               containers: 'foodappregistry.azurecr.io/food-app:$(tag)'
@@ -222,7 +222,7 @@ stages:
           - task: Kubernetes@1
             inputs:
               connectionType: 'Kubernetes Service Connection'
-              kubernetesServiceEndpoint: 'K8FoodAppV5'
+              kubernetesServiceEndpoint: 'K8FoodAppV7'
               namespace: 'default'
               command: 'get'
               arguments: 'service food-app-deploy-http2'
@@ -246,7 +246,7 @@ stages:
             displayName: 'kubectl expose'
             continueOnError: true
             inputs:
-              kubernetesServiceEndpoint: 'K8FoodAppV5'
+              kubernetesServiceEndpoint: 'K8FoodAppV7'
               namespace: default
               command: expose
               arguments: 'deployment food-system --type=LoadBalancer --port 5000  --name=food-app-deploy-http2'
