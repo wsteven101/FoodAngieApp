@@ -8,10 +8,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: / 
         backend:
           service:
             name: food-system
             port: 
-              number: 5000
+              number: 80
+        pathType: Exact

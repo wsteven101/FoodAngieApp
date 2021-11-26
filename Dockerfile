@@ -99,7 +99,8 @@ EXPOSE 5501
 
 ENV ASPNETCORE_ENVIRONMENT Production
 #ENV ASPNETCORE_URLS http://*:5000;https://*:5001
-ENV ASPNETCORE_URLS http://*:5000
+#ENV ASPNETCORE_URLS http://*:5000
+ENV ASPNETCORE_URLS http://*:80
 
 WORKDIR /app
 COPY --from=build /app/publish .

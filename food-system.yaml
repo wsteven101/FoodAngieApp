@@ -1,33 +1,48 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
+apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Pod
 metadata:
-    name: food-system
-
-#    spec:
-#selector:
-#    matchLabels:
-#    app: foodapp
-#replicas: 2 # tells deployment to run 2 pods matching the template
-#emplate:
-#
-#    metadata:
-#    labels:
-#        app: foodapp
+  name: food-system
+  labels:
+    app: food-system
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: foodapp
-    template:
-        metadata:
-            labels:
-                app: foodapp
-        spec:
-            containers:
-                - name: foodapp
-                  image: foodappregistry.azurecr.io/food-app
-                  imagePullPolicy: Always                  
-                  ports:
-                  - containerPort: 5000
-            imagePullSecrets:
-                - name: regcred  
+  containers:
+  - name: foodapp
+    image: foodappregistry.azurecr.io/food-app
+    imagePullPolicy: Always                  
+    ports:
+    - containerPort: 80
+      protocol: TCP
+      imagePullSecrets:
+      - name: regcred 
+        
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: food-system
+spec:
+  selector:
+    app: food-system
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    
+    
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+  # name: food-system
+  # annotations:
+    # kubernetes.io/ingress.class: azure/application-gateway
+# spec:
+  # rules:
+  # - http:
+      # paths:
+      # - path: /
+        # backend:
+          # service:
+            # name: food-system
+            # port:
+              # number: 5000
+        # pathType: Exact
