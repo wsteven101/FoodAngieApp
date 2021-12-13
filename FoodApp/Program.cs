@@ -23,14 +23,14 @@ namespace FoodApp
                 // restore key vault once id management on azure
                 // is sortrted !!!!!!!! - see section below
                 // 
-                 // Azure Key Vault
-                //.ConfigureAppConfiguration((context, config) =>
-                //{
-                //    var buildConfig = config.Build();
-                //    config.AddAzureKeyVault(
-                //        new Uri("https://foodappvault.vault.azure.net"),
-                //        new DefaultAzureCredential());
-                //})
+                // Azure Key Vault
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    var buildConfig = config.Build();
+                    config.AddAzureKeyVault(
+                        new Uri("https://foodappvault.vault.azure.net"),
+                        new DefaultAzureCredential());
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

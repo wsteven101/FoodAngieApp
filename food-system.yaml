@@ -1,65 +1,51 @@
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-    name: food-system
-
-#    spec:
-#selector:
-#    matchLabels:
-#    app: foodapp
-#replicas: 2 # tells deployment to run 2 pods matching the template
-#emplate:
-#
-#    metadata:
-#    labels:
-#        app: foodapp
+  name: foodsystem-app
+  labels:
+    app: foodsystem-app
 spec:
-    replicas: 1
-    selector:
-        matchLabels:
-            app: food-system
-    template:
-        metadata:
-            labels:
-                app: food-system
-        spec:
-            containers:
-                - name: foodapp
-                  image: foodappregistry.azurecr.io/food-app
-                  imagePullPolicy: Always                  
-                  ports:
-                  - containerPort: 80
-            imagePullSecrets:
-                - name: regcred  
+  containers:
+#  - image: "mcr.microsoft.com/dotnet/core/samples:aspnetapp"
+  - image: "foodappregistry.azurecr.io/food-app:latest"
+    name: foodsystem-image
+    ports:
+    - containerPort: 80
+      protocol: TCP
+  imagePullSecrets:
+      - name: regcred
 
-        
+---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: food-system
+  name: foodsystem-service
 spec:
   selector:
-    app: food-system
+    app: foodsystem-app
   ports:
   - protocol: TCP
     port: 80
     targetPort: 80
-    
-    
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-  # name: food-system
-  # annotations:
-    # kubernetes.io/ingress.class: azure/application-gateway
-# spec:
-  # rules:
-  # - http:
-      # paths:
-      # - path: /
-        # backend:
-          # service:
-            # name: food-system
-            # port:
-              # number: 5000
-        # pathType: Exact
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: foodsystem-ingress
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          service:
+            name: foodsystem-service
+            port:
+              number: 80
+        pathType: Exact
+
