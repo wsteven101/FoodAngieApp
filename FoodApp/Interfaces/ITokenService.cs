@@ -12,7 +12,7 @@ namespace FoodApp.Interfaces
         string BuildToken(
             string key,
             string issuer,
-            User user);
+            UserEntity user);
         bool ValidateToken(
             string key,
             string issuer,

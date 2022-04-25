@@ -13,14 +13,14 @@ namespace FoodDomain.DTO
     {
         public AutoMapperProfiles()
         {
-            CreateMap<BagItem, BagRDto>();
-            CreateMap<FoodItem, FoodRDto>();
-            CreateMap<NutritionalContent, NutritionRDto>();
-            CreateMap<User, UserRDto>().ReverseMap();
+            CreateMap<BagEntity, BagRDto>();
+            CreateMap<FoodEntity, FoodRDto>();
+            CreateMap<NutritionalContentEntity, NutritionRDto>();
+            CreateMap<UserEntity, UserRDto>().ReverseMap();
 
-            CreateMap<BagRDto, BagItem>();
-            CreateMap<FoodRDto,FoodItem>();
-            CreateMap<NutritionRDto, NutritionalContent>();
+            CreateMap<BagRDto, BagEntity>();
+            CreateMap<FoodRDto,FoodEntity>();
+            CreateMap<NutritionRDto, NutritionalContentEntity>();
         }
     }
 }

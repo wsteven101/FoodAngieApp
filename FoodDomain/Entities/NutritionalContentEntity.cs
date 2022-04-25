@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FoodDomain.Entities
 {
-    public class NutritionalContent
+    public class NutritionalContentEntity
     {
         public long Id { get; set;  }
         public decimal Fat { get; set; } 
         public decimal SaturatedFat { get; set; }
         public decimal Sugar { get; set; }
-        decimal Salt { get; set; }
+        public decimal Salt { get; set; }
     }
 
 }

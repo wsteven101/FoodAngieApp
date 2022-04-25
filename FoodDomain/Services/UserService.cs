@@ -25,12 +25,12 @@ namespace FoodDomain.Services
             _mapper = mapper;
         }
 
-        public async Task<User> GetByUserId(string userId)
+        public async Task<UserEntity> GetByUserId(string userId)
         {
             try
             {
                 var userDto = await _userRepo.GetByUserId(userId);
-                var user = _mapper.Map<User>(userDto);
+                var user = _mapper.Map<UserEntity>(userDto);
                 return user;
             }
             catch(Exception ex)
@@ -39,7 +39,7 @@ namespace FoodDomain.Services
             }
         }
 
-        public async Task Update(User user)
+        public async Task Update(UserEntity user)
         {
             try
             {

@@ -38,7 +38,7 @@ namespace FoodApp.Controllers
         // GET api/<FoodController>/5
         // e.g. https://localhost:5001/api/Food/xx
         [HttpGet("{id}")]
-        public FoodItem Get(string id)
+        public FoodEntity Get(string id)
         {
             var food = _foodService.GetByName(id);
             return food;
@@ -56,7 +56,7 @@ namespace FoodApp.Controllers
 
         // POST api/<FoodController>
         [HttpPost]
-        public void Post([FromBody] FoodItem foodItem)
+        public void Post([FromBody] FoodEntity foodItem)
         {
             _foodService.Update(foodItem);
         }

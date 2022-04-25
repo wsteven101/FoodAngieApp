@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FoodDomain.Entities
 {
-    public class User
+    public class UserEntity
     {
         public long Id { get; set; }
         public string UserName { get; set; }

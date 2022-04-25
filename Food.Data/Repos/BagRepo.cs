@@ -7,6 +7,7 @@ using AutoMapper;
 using Food.Data.Data;
 using Food.Data.Models;
 using FoodDomain.DTO.Repo;
+using FoodDomain.Entities;
 using FoodDomain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +25,7 @@ namespace Food.Data.Repos
             _mapper = mapper;
         }
 
-        public async Task<BagRDto> GetByName(string name)
+        public async Task<BagEntity> GetByName(string name)
         {
             var bag = await _foodAngieContext.Bags
                 .AsNoTracking()
@@ -32,11 +33,11 @@ namespace Food.Data.Repos
                 .Where(b => b.Name == name)
                 .FirstOrDefaultAsync();
 
-            var bagDto = _mapper.Map<BagRDto>(bag);
+            var bagDto = _mapper.Map<BagEntity>(bag);
             return bagDto;             
         }
 
-        public async Task<List<BagRDto>> GetBagsByUserId(long userId)
+        public async Task<List<BagEntity>> GetBagsByUserId(long userId)
         {
             var userBags = await _foodAngieContext.Bags
                 .AsNoTracking()
@@ -50,12 +51,12 @@ namespace Food.Data.Repos
                 )
                 .ToListAsync();
 
-            var userBagDtos = _mapper.Map<List<BagRDto>>(userBags);
+            var userBagDtos = _mapper.Map<List<BagEntity>>(userBags);
 
             return userBagDtos;
         }
 
-        public async Task<List<BagRDto>> GetBags(List<long> bagList)
+        public async Task<List<BagEntity>> GetBags(List<long> bagList)
         {
             var bags = await _foodAngieContext.Bags
                 .AsNoTracking()
@@ -63,11 +64,11 @@ namespace Food.Data.Repos
                 .Where(b => bagList.Contains(b.Id))
                 .ToListAsync();
 
-            var bagDtos = _mapper.Map<List<BagRDto>>(bags);
+            var bagDtos = _mapper.Map<List<BagEntity>>(bags);
             return bagDtos;
         }
 
-        public async Task Update(BagRDto bagDto)
+        public async Task Update(BagEntity bagDto)
         {
              // disconnected save
              try

@@ -28,24 +28,24 @@ namespace FoodDomain.Services
         }
 
 
-        public async Task<BagItem> GetByName(string name)
+        public async Task<BagEntity> GetByName(string name)
         {
             var bagDto = await _bagRepo.GetByName(name);
-            var bagItem = _mapper.Map<BagItem>(bagDto);
+            var bagItem = _mapper.Map<BagEntity>(bagDto);
 
             await FillBag(bagItem);
 
             return bagItem;
         }
 
-        public async Task<List<BagItem>> GetBagsByUserId(long userId)
+        public async Task<List<BagEntity>> GetBagsByUserId(long userId)
         {
             var userBagsDtos = (await _bagRepo.GetBagsByUserId(userId)).ToList();
-            var userBagItems = _mapper.Map<List<BagItem>>(userBagsDtos);
+            var userBagItems = _mapper.Map<List<BagEntity>>(userBagsDtos);
             return userBagItems.ToList();
         }
 
-        public async Task FillBag(BagItem bag)
+        public async Task FillBag(BagEntity bag)
         {
             List<long> bagIdList = new List<long>();
             List<long> foodIdList = new List<long>();
@@ -55,14 +55,14 @@ namespace FoodDomain.Services
             var bagDtos = await _bagRepo.GetBags(bagIdList);
             var foodDtos = await _foodRepo.GetFoods(foodIdList);
 
-            var bags = _mapper.Map<List<BagItem>>(bagDtos);
-            var foods = _mapper.Map<List<FoodItem>>(foodDtos);
+            var bags = _mapper.Map<List<BagEntity>>(bagDtos);
+            var foods = _mapper.Map<List<FoodEntity>>(foodDtos);
 
             ReplacePlaceholderItems(bag, bags, foods);
         }
 
         private void AddToBagList(
-            BagItem parentBag, 
+            BagEntity parentBag, 
             List<long> bagIdList,
             List<long> foodIdList)
         {
@@ -88,9 +88,9 @@ namespace FoodDomain.Services
         }
 
         public void ReplacePlaceholderItems(
-            BagItem parentBag, 
-            List<BagItem> bagList,
-            List<FoodItem> foodList)
+            BagEntity parentBag, 
+            List<BagEntity> bagList,
+            List<FoodEntity> foodList)
         {
 
             var placeholderFoods = parentBag.Foods
@@ -123,16 +123,16 @@ namespace FoodDomain.Services
 
         }
 
-        private bool isRefreshFood(FoodItem food) => (food.UpdateData == true) || (food.Nutrition == null);
+        private bool isRefreshFood(FoodEntity food) => (food.UpdateData == true) || (food.Nutrition == null);
 
-        private bool isRefreshBag(BagItem bag) => (bag.UpdateData == true) || (bag.Nutrition == null);
+        private bool isRefreshBag(BagEntity bag) => (bag.UpdateData == true) || (bag.Nutrition == null);
 
-        public async Task Update(BagItem bag)
+        public async Task Update(BagEntity bag)
         {
             try
             {
                 bag.Nutrition.Id = bag.Id;
-                var bagDto = _mapper.Map<BagRDto>(bag);
+                var bagDto = _mapper.Map<BagEntity>(bag);
                 await _bagRepo.Update(bagDto);
             }
             catch(Exception ex)

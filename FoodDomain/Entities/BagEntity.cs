@@ -8,23 +8,24 @@ using System.Threading.Tasks;
 
 namespace FoodDomain.Entities
 {
-    public class BagItem
+    public class BagEntity
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public string UserId { get; set; }
         public bool UpdateData { get; set; } = false;
-        public NutritionalContent Nutrition { get; set; }
+        public NutritionalContentEntity Nutrition { get; set; }
         public IList<FoodItemNode> Foods { get; init; } = new List<FoodItemNode>();
         public IList<BagItemNode> Bags { get; init; } = new List<BagItemNode>();
 
         private string ConstituentsJSON = "";
 
-        public BagItem() 
+        public BagEntity() 
         {
             RestoreHeiarchy();
         } 
 
-        public BagItem(BagRDto bag)
+        public BagEntity(BagRDto bag)
         {
             Id = bag.Id;
             Name = bag.Name;
@@ -40,7 +41,7 @@ namespace FoodDomain.Entities
                 return;
             }
 
-            var bagItem = JsonSerializer.Deserialize<BagItem>(ConstituentsJSON);
+            var bagItem = JsonSerializer.Deserialize<BagEntity>(ConstituentsJSON);
             Foods.Clear();
             bagItem.Foods.ToList().ForEach(f => Foods.Add(f));
 
@@ -51,10 +52,10 @@ namespace FoodDomain.Entities
 
         public void TakeJSONHiearchcySnapshot()
         {
-            ConstituentsJSON = JsonSerializer.Serialize<BagItem>(this);
+            ConstituentsJSON = JsonSerializer.Serialize<BagEntity>(this);
         }
 
-        public void AddFood(FoodItem food, int qty = 1) => Foods.Add(new FoodItemNode(qty, food));
-        public void AddBag(BagItem bag, int qty = 1) => Bags.Add(new BagItemNode(qty, bag) );
+        public void AddFood(FoodEntity food, int qty = 1) => Foods.Add(new FoodItemNode(qty, food));
+        public void AddBag(BagEntity bag, int qty = 1) => Bags.Add(new BagItemNode(qty, bag) );
     }
 }

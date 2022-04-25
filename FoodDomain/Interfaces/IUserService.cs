@@ -10,7 +10,7 @@ namespace FoodDomain.Interfaces
 {
     public interface IUserService
     {
-        public Task<User> GetByUserId(string userName);
-        public Task Update(User user);
+        public Task<UserEntity> GetByUserId(string userName);
+        public Task Update(UserEntity user);
     }
 }

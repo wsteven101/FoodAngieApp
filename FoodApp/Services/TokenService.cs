@@ -21,7 +21,7 @@ namespace FoodApp.Services
         public string BuildToken(
             string key,
             string issuer,
-            User user)
+            UserEntity user)
         {
             var claims = new[]
             {

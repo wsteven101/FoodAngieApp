@@ -13,18 +13,18 @@ namespace FoodApp
     {
         public AutoMapperProfiles()
         {
-            CreateMap<BagItem, BagItemADto>();
+            CreateMap<BagEntity, BagItemADto>();
             CreateMap<BagItemNode, BagItemNodeADto>();
-            CreateMap<FoodDomain.Entities.FoodItem, FoodItemADto>();
+            CreateMap<FoodDomain.Entities.FoodEntity, FoodItemADto>();
             CreateMap<FoodItemNode, FoodItemNodeADto>();
-            CreateMap<NutritionalContent, NutritionalContentADto>();
-            CreateMap<FoodDomain.Entities.User, UserADto>().ReverseMap();
+            CreateMap<NutritionalContentEntity, NutritionalContentADto>();
+            CreateMap<FoodDomain.Entities.UserEntity, UserADto>().ReverseMap();
 
-            CreateMap<BagItemADto, BagItem>();
+            CreateMap<BagItemADto, BagEntity>();
             CreateMap<BagItemNodeADto, BagItemNode>();
-            CreateMap<FoodItemADto, FoodDomain.Entities.FoodItem>();
+            CreateMap<FoodItemADto, FoodDomain.Entities.FoodEntity>();
             CreateMap<FoodItemNodeADto, FoodItemNode>();
-            CreateMap<NutritionalContentADto, NutritionalContent>();
+            CreateMap<NutritionalContentADto, NutritionalContentEntity>();
 
         }
 

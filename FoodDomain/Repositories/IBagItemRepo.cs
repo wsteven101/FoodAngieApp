@@ -1,4 +1,5 @@
 ﻿using FoodDomain.DTO.Repo;
+using FoodDomain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace FoodDomain.Repositories
 {
     public interface IBagItemRepo
     {
-        public Task<BagRDto> GetByName(string name);
-        public Task<List<BagRDto>> GetBagsByUserId(long userId);
-        public Task<List<BagRDto>> GetBags(List<long> bagList);
-        public Task Update(BagRDto bagDto);
+        public Task<BagEntity> GetByName(string name);
+        public Task<List<BagEntity>> GetBagsByUserId(long userId);
+        public Task<List<BagEntity>> GetBags(List<long> bagList);
+        public Task Update(BagEntity bagDto);
     }
 }

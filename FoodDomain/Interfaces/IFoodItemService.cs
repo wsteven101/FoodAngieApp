@@ -9,9 +9,9 @@ namespace FoodDomain.Interfaces
 {
     public interface IFoodItemService
     {
-        public FoodItem Get(long id);
-        public FoodItem GetByName(string name);
-        public Task<List<FoodItem>> GetUserFoods(long userId);
-        public void Update(FoodItem foodItem);
+        public FoodEntity Get(long id);
+        public FoodEntity GetByName(string name);
+        public Task<List<FoodEntity>> GetUserFoods(long userId);
+        public void Update(FoodEntity foodItem);
     }
 }

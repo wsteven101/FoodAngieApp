@@ -1,0 +1,33 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+    name: food-system
+
+#    spec:
+#selector:
+#    matchLabels:
+#    app: foodapp
+#replicas: 2 # tells deployment to run 2 pods matching the template
+#emplate:
+#
+#    metadata:
+#    labels:
+#        app: foodapp
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: foodapp
+    template:
+        metadata:
+            labels:
+                app: foodapp
+        spec:
+            containers:
+                - name: foodapp
+                  image: foodappregistry.azurecr.io/food-app
+                  imagePullPolicy: Always                  
+                  ports:
+                  - containerPort: 5000
+            imagePullSecrets:
+                - name: regcred  

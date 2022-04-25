@@ -1,4 +1,5 @@
 ﻿using FoodDomain.DTO.Repo;
+using FoodDomain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace FoodDomain.Repositories
 {
     public interface IFoodItemRepo
     {
-        FoodRDto GetByName(string name);
-        public Task<List<FoodRDto>> GetFoodsByUserId(long userId);
-        public Task<List<FoodRDto>> GetFoods(List<long> foodList);
+        FoodEntity GetByName(string name);
+        public Task<List<FoodEntity>> GetFoodsByUserId(long userId);
+        public Task<List<FoodEntity>> GetFoods(List<long> foodList);
     }
 }

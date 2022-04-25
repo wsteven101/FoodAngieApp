@@ -37,7 +37,7 @@ namespace FoodApp.Controllers
 
         // GET api/<FoodController>/5
         [HttpGet("{id}")]
-        public async Task<BagItem> Get(string id)
+        public async Task<BagEntity> Get(string id)
         {
             var item = await _bagService.GetByName(id);
             return item;
@@ -71,7 +71,7 @@ namespace FoodApp.Controllers
         {
             try
             {
-                var bag =_mapper.Map<BagItem>(bagDto);
+                var bag =_mapper.Map<BagEntity>(bagDto);
                 await _bagService.FillBag(bag);
 
                 var filledBagDto = _mapper.Map<BagItemADto>(bag);
@@ -86,7 +86,7 @@ namespace FoodApp.Controllers
 
         // POST api/<BagItem>
         [HttpPost]
-        public void Post([FromBody] BagItem value)
+        public void Post([FromBody] BagEntity value)
         {
             _bagService.Update(value);
         }

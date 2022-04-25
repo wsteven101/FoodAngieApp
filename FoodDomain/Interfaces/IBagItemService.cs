@@ -10,9 +10,9 @@ namespace FoodDomain.Interfaces
 {
     public interface IBagItemService
     {
-        public Task<List<BagItem>> GetBagsByUserId(long userId);
-        public Task<BagItem> GetByName(string name);
-        public Task FillBag(BagItem bag);
-        public Task Update(BagItem foodItem);
+        public Task<List<BagEntity>> GetBagsByUserId(long userId);
+        public Task<BagEntity> GetByName(string name);
+        public Task FillBag(BagEntity bag);
+        public Task Update(BagEntity foodItem);
     }
 }

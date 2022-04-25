@@ -23,7 +23,7 @@ namespace FoodDomain.Services
         }
 
 
-        public FoodItem Get(long id)
+        public FoodEntity Get(long id)
         {
             //foreach(var f in _mockDBList)
             //{
@@ -35,7 +35,7 @@ namespace FoodDomain.Services
             return default;
         }
 
-        public FoodItem GetByName(string name)
+        public FoodEntity GetByName(string name)
         {
             //if (_mockDBList.TryGetValue(name, out FoodItem item))
             //{
@@ -45,15 +45,15 @@ namespace FoodDomain.Services
             return default;
         }
 
-        public async Task<List<FoodItem>> GetUserFoods(long userId)
+        public async Task<List<FoodEntity>> GetUserFoods(long userId)
         {
             var userItemDtos = (await _foodRepo.GetFoodsByUserId(userId)).ToList();
-            var userItems = _mapper.Map<List<FoodItem>>(userItemDtos);
+            var userItems = _mapper.Map<List<FoodEntity>>(userItemDtos);
             return userItems.ToList();
         }
 
 
-        public void Update(FoodItem foodItem)
+        public void Update(FoodEntity foodItem)
         {
 
             //if ( _mockDBList.TryGetValue(foodItem.Name, out FoodItem updateItem) )
