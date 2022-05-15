@@ -1,4 +1,4 @@
-
+<p>{{bag.name}}</p>
 <mat-card class="bag-card-body">  <mat-card-header>
 
   <mat-card-title class="bag-card-title">
@@ -11,8 +11,10 @@
   </mat-card-header>
 
     <mat-card-content class="bag-content">
+      <div>Name</div><div>{{bag.name}}</div>
+
       <div>Fat</div><div>{{bag.nutrition.fat}}</div>
-      <div>Sat. Fat</div><div>{{bag.nutrition.saturatedFat}}</div>
+      <div>Sat Fat</div><div>{{bag.nutrition.saturatedFat}}</div>
       <div>Sugar</div><div>{{bag.nutrition.sugar}}</div>
       <div>Salt</div><div>{{bag.nutrition.salt}}</div>
     </mat-card-content>

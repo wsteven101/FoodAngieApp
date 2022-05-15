@@ -1,7 +1,7 @@
 <div class="bag-editor-body">
   <div>
     <mat-grid-list cols="4" rowHeight="4:3">
-      <mat-grid-tile *ngFor="let item of bags$ | async; let i = index">
+      <mat-grid-tile *ngFor="let item of (bags$ | async); let i = index">
         <app-bag-card [bag]="item"></app-bag-card>
       </mat-grid-tile>
     </mat-grid-list>

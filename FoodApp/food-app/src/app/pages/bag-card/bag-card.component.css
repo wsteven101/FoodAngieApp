@@ -1,13 +1,15 @@
 .bag-card-title {
-    margin-top: 10px;
+  border: solid;
+  border-color: red;
+  border-width: 1px;
 }
 
 .bag-card-body{
     border: solid;
     border-color: blue;
     border-width: 1px;
-    min-width: 100px;
-    max-width: 200px;
+    min-width: 200px;
+    max-width: 400px;
 
 }
 

@@ -13,12 +13,12 @@ export class BagService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getBag(id: string): Observable<Bag> {
+  public getBag(name: string): Observable<Bag> {
 
     //const options = id ? { params: new HttpParams().set('id', id) } : {};
-    const options = id ? { params: new HttpParams().set('id', id) } : {};
+    const options = name ? { params: new HttpParams().set('name', name) } : {};
 
-    let urlStr: string = 'http://localhost:54657/api/Bag/' + id;
+    let urlStr: string = 'http://localhost:54657/api/Bag/' + name;
     console.log("Order Repository calling:" + urlStr);
 
     return this.httpClient.get<Bag>(urlStr, options);

@@ -55,13 +55,13 @@ namespace FoodDomain.IntTest
 
             try
             {
-                var bagService = new BagItemService(bagRepo,foodRepo,_mapper);
+                var bagService = new BagItemService(bagRepo, foodRepo, _mapper);
                 var bag = await bagService.GetByName(bagName);
 
                 Assert.Greater(bag.Id, 0);
                 Assert.AreEqual(bagName, bag.Name);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -84,12 +84,12 @@ namespace FoodDomain.IntTest
 
             try
             {
-                var bagService = new BagItemService(bagRepo,foodRepo,_mapper);
+                var bagService = new BagItemService(bagRepo, foodRepo, _mapper);
                 var bags = await bagService.GetBagsByUserId(bagUserId.Value);
 
                 Assert.Greater(bags.Count, 0);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -130,7 +130,7 @@ namespace FoodDomain.IntTest
                     f.Name = "";
                     f.Nutrition = null;
                     testBag.Foods.Add(new FoodItemNode(1, f));
-                 });
+                });
 
                 var childBag = bags[1];
                 childBag.UpdateData = true;
@@ -138,13 +138,13 @@ namespace FoodDomain.IntTest
                 childBag.Foods.Clear();
 
                 testBag.Bags.Clear();
-                testBag.Bags.Add( new BagItemNode(1,childBag));
+                testBag.Bags.Add(new BagItemNode(1, childBag));
 
-                await  bagService.FillBag(testBag);
+                await bagService.FillBag(testBag);
                 Assert.Greater(testBag.Bags[0].Bag.Nutrition.Fat, 0);
                 Assert.Greater(testBag.Foods[0].Food.Nutrition.Fat, 0);
 
-                 // json field
+                // json field
                 testBag.TakeJSONHiearchcySnapshot();
 
                 // clear
@@ -214,6 +214,57 @@ namespace FoodDomain.IntTest
             }
 
         }
+
+        [Test]
+        public void Test_Bag_Nutrition_Content()
+        {
+            var bag = new BagEntity
+            {
+                Foods = new FoodItemNode[]
+                {
+                    new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                    new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                    new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } })
+                },
+                Bags = new BagItemNode[] {
+                    new BagItemNode(1, new BagEntity
+                    {
+                        Foods = {
+                            new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                            new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                            new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } })
+                        },
+                        Bags = new BagItemNode[] {
+                            new BagItemNode(1, new BagEntity
+                            {
+                                Foods = {
+                                    new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                                    new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                                    new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } })
+                                }
+                            })
+                        }
+                    }),
+                    new BagItemNode(1, new BagEntity
+                    {
+                        Foods = {
+                            new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                            new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } }),
+                            new FoodItemNode(1, new FoodEntity { Nutrition = new NutritionalContentEntity { Fat = 1.1m, Salt = 1.2m, SaturatedFat = 1.3m, Sugar = 1.4m } })
+                        }
+                    })
+                }
+            };
+
+            var n = bag.TotalBagNutrition();
+            Assert.AreEqual(12m * 1.1m, bag.Nutrition.Fat);
+            Assert.AreEqual(12m * 1.2m, bag.Nutrition.Salt);
+            Assert.AreEqual(12m * 1.3m, bag.Nutrition.SaturatedFat);
+            Assert.AreEqual(12m * 1.4m, bag.Nutrition.Sugar);
+
+
+        }
+
 
     }
 }

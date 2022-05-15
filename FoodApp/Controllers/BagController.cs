@@ -36,10 +36,10 @@ namespace FoodApp.Controllers
 
 
         // GET api/<FoodController>/5
-        [HttpGet("{id}")]
-        public async Task<BagEntity> Get(string id)
+        [HttpGet("{name}")]
+        public async Task<BagEntity> Get(string name)
         {
-            var item = await _bagService.GetByName(id);
+            var item = await _bagService.GetByName(name);
             return item;
         }
 

@@ -10,11 +10,13 @@ namespace FoodDomain.Entities
 {
     public class BagEntity
     {
+        private NutritionalContentEntity _nutrition { get; set; } = new NutritionalContentEntity();
+
         public long Id { get; set; }
         public string Name { get; set; }
         public string UserId { get; set; }
         public bool UpdateData { get; set; } = false;
-        public NutritionalContentEntity Nutrition { get; set; }
+        public NutritionalContentEntity Nutrition { get => TotalBagNutrition(); set => _nutrition = value; }
         public IList<FoodItemNode> Foods { get; init; } = new List<FoodItemNode>();
         public IList<BagItemNode> Bags { get; init; } = new List<BagItemNode>();
 
@@ -53,6 +55,22 @@ namespace FoodDomain.Entities
         public void TakeJSONHiearchcySnapshot()
         {
             ConstituentsJSON = JsonSerializer.Serialize<BagEntity>(this);
+        }
+
+        public NutritionalContentEntity TotalBagNutrition()
+        {
+            _nutrition.Reset();
+
+            Bags.ToList().ForEach(b => _nutrition += b.Bag.TotalBagNutrition());
+            Foods.ToList().ForEach(f => _nutrition += f.Food.Nutrition);
+
+            return _nutrition;
+        }
+            
+        public T Iterate<T>(T observationResult, Func<T,BagItemNode,T> f)
+        {
+            Bags.ToList().ForEach(b=>f(observationResult,b));
+            return observationResult;
         }
 
         public void AddFood(FoodEntity food, int qty = 1) => Foods.Add(new FoodItemNode(qty, food));
