@@ -59,6 +59,24 @@ namespace FoodDomain.Services
             var foods = _mapper.Map<List<FoodEntity>>(foodDtos);
 
             ReplacePlaceholderItems(bag, bags, foods);
+            bag.Nutrition = RecalculateNutrition(bag);
+        }
+
+        private NutritionalContentEntity RecalculateNutrition(BagEntity bagEntity)
+        {
+            var totalNutrition = new NutritionalContentEntity();
+            
+            foreach(var bagNode in bagEntity.Bags)
+            {
+                totalNutrition += RecalculateNutrition(bagNode.Bag) * bagNode.Quantity;
+            }
+
+            foreach(var foodNode in bagEntity.Foods)
+            {
+                totalNutrition += foodNode.Food.Nutrition * foodNode.Quantity;
+            }
+
+            return totalNutrition;
         }
 
         private void AddToBagList(

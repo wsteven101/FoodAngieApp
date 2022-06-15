@@ -9,6 +9,8 @@ import { UserService } from '../../services/user-service';
 import { NameIdPair } from '../../models/NameIdPair';
 import { MatSelectChange } from '@angular/material/select';
 import { BagItemNode } from '../../models/BagItemNode';
+import { Food } from '../../models/food';
+import { FoodItemNode } from '../../models/FoodItemNode';
 
 @Component({
   selector: 'app-bag',
@@ -18,12 +20,14 @@ import { BagItemNode } from '../../models/BagItemNode';
 export class BagComponent implements OnInit {
 
   public userFoods$: Observable<Array<NameIdPair>> = new Observable<Array<NameIdPair>>();
+  public userBags$: Observable<Array<NameIdPair>> = new Observable<Array<NameIdPair>>();
   public bag$: Observable<Bag> = new Observable<Bag>();
   private currentBag: Bag = new Bag(0, "");
   public bagFormGroup: FormGroup;
   public newBag: NameIdPair = new NameIdPair(0,"");
   public emptyBagArray: Array<BagItemNode> = new Array<BagItemNode>();
-  public bagList$: Observable<Array<BagItemNode>>  = new Observable<Array<BagItemNode>>();
+  public bagList$: Observable<Array<BagItemNode>> = new Observable<Array<BagItemNode>>();
+  public foodList$: Observable<Array<FoodItemNode>> = new Observable<Array<FoodItemNode>>();
 
   constructor(
     private bagService: BagService,
@@ -42,6 +46,7 @@ export class BagComponent implements OnInit {
   }
 
   public loadData(bagName: string) {
+    this.userBags$ = this.userService.getAllUserBagNames("1");
     this.loadUserFoods();
   }
 
@@ -77,6 +82,15 @@ export class BagComponent implements OnInit {
     this.bagService.fillBag(this.currentBag).subscribe(bag => this.setBag(bag));
   }
 
+  public onFoodSelectionChange(namedId: NameIdPair) {
+    //var namedId = <NameIdPair>event.value;
+    var newFood = new Food(namedId.id, namedId.name, true, new Nutrition());
+    var newFoodNode = new FoodItemNode(1, newFood);
+    this.currentBag.foods.push(newFoodNode);
+
+    this.bagService.fillBag(this.currentBag).subscribe(bag => this.setBag(bag));
+  }
+
   private setBag(bag: Bag) {
 
     console.log("bag subscription");
@@ -92,5 +106,11 @@ export class BagComponent implements OnInit {
     });
 
     this.bagList$ = of(bag.bags);
+    this.foodList$ = of(bag.foods);
+  }
+
+  public isSugarInRange() : boolean {
+        var inRange = this.currentBag.nutrition.sugar < 20;
+    return inRange;
   }
 }

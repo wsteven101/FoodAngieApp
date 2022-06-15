@@ -1,15 +1,17 @@
 <p>{{bag.name}}</p>
-<mat-card class="bag-card-body">  <mat-card-header>
+<mat-card class="bag-card-body">
+  <mat-card-header>
 
-  <mat-card-title class="bag-card-title">
-    {{bag.name}}
-  </mat-card-title>
+    <mat-card-title class="bag-card-title">
+      {{bag.name}}
+    </mat-card-title>
 
-  <mat-card-subtitle>
-  </mat-card-subtitle>
+    <mat-card-subtitle>
+    </mat-card-subtitle>
 
   </mat-card-header>
 
+  <div>
     <mat-card-content class="bag-content">
       <div>Name</div><div>{{bag.name}}</div>
 
@@ -18,12 +20,15 @@
       <div>Sugar</div><div>{{bag.nutrition.sugar}}</div>
       <div>Salt</div><div>{{bag.nutrition.salt}}</div>
     </mat-card-content>
+  </div>
+  <!--<div class="bag-actions">-->
+  <mat-card-actions >
+    <div class="bag-view-button">
+      <button mat-button (click)="viewButton(bag.name)">View</button>
+    </div>
+  </mat-card-actions>
+  <!--</div>-->
 
-    <mat-card-actions class="bag-actions">
-      <div class="center">
-        <button mat-button class="bag-view-button" (click)="viewButton(bag.name)">View</button>
-      </div>
-    </mat-card-actions>
 
   <mat-card-footer class="card-footer">
 

@@ -31,6 +31,16 @@ namespace FoodDomain.Entities
             n.Salt += n2.Salt;
             return n;
         }
+
+        public static NutritionalContentEntity operator *(NutritionalContentEntity n1, int multiplier)
+        {
+            NutritionalContentEntity n = (NutritionalContentEntity)n1.MemberwiseClone();
+            n.Fat *= multiplier;
+            n.SaturatedFat *= multiplier;
+            n.Sugar *= multiplier;
+            n.Salt *= multiplier;
+            return n;
+        }
     }
 
 }

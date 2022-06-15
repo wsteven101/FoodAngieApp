@@ -8,4 +8,6 @@
 .router-area {
   width: stretch;
   height: stretch;
+  border: solid;
+  border-width:thick;
 }
