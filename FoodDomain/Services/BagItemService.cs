@@ -125,7 +125,16 @@ namespace FoodDomain.Services
                 var food = foodList.FirstOrDefault(f => f.Id == placeholderFood.Food.Id);
                 if (food != default)
                 {
-                    parentBag.Foods.Add(placeholderFood with { Food = food });
+                    var existingFood = parentBag.Foods.Where(f => f.Food.Id == placeholderFood.Food.Id).FirstOrDefault();
+                    if (existingFood != default)
+                    {
+                        parentBag.Foods.Remove(existingFood);
+                        parentBag.Foods.Add(existingFood with { Quantity = existingFood.Quantity + 1 });      
+                    }
+                    else
+                    {
+                        parentBag.Foods.Add(placeholderFood with { Food = food });
+                    }
                 }
             }
 
@@ -135,7 +144,15 @@ namespace FoodDomain.Services
                 var bag = bagList.FirstOrDefault(f => f.Id == placeholderBag.Bag.Id);
                 if (bag != default)
                 {
-                    parentBag.Bags.Add(placeholderBag with { Bag = bag });
+                    var existingBag = parentBag.Bags.Where(bl => bl.Bag.Id == placeholderBag.Bag.Id).FirstOrDefault();
+                    if (existingBag != default)
+                    {
+                        parentBag.Bags.Add(existingBag with { Quantity = existingBag.Quantity + 1 });
+                    }
+                    else
+                    {
+                        parentBag.Bags.Add(placeholderBag with { Bag = bag });
+                    }
                 }
             }
 

@@ -66,15 +66,12 @@ export class BagComponent implements OnInit {
 
     const bagName = this.route.snapshot.queryParamMap.get('name');
     if (bagName != null) {
-//      (this.bag$ = this.bagService.getBag(bagName)).subscribe(
       this.bagService.getBag(bagName).subscribe(bag => this.setBag(bag));
-
-        this.loadData(bagName);
+      this.loadData(bagName);
     }
   }
 
   public onBagSelectionChange(namedId: NameIdPair) {
-    //var namedId = <NameIdPair>event.value;
     var newBag = new Bag(namedId.id, namedId.name, true);
     var newBagNode = new BagItemNode(1, newBag);
     this.currentBag.bags.push(newBagNode);
@@ -83,7 +80,7 @@ export class BagComponent implements OnInit {
   }
 
   public onFoodSelectionChange(namedId: NameIdPair) {
-    //var namedId = <NameIdPair>event.value;
+
     var newFood = new Food(namedId.id, namedId.name, true, new Nutrition());
     var newFoodNode = new FoodItemNode(1, newFood);
     this.currentBag.foods.push(newFoodNode);

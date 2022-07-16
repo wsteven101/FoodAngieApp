@@ -1,4 +1,7 @@
 <div class="bag-body">
+  <mat-icon fontSet="fontIcons" fontIcon="fontIcon"></mat-icon>
+  <!-- <mat-icon svgIcon="svgIcons:svgIcon"></mat-icon> -->
+<!--   <mat-icon inline>ligature_icon</mat-icon> -->
 
   <form [formGroup]="bagFormGroup" class="bag-form">
     <div>
@@ -9,24 +12,24 @@
     </div>
     <mat-form-field appearance="outline"  class="bag-field">
       <mat-label>Fat</mat-label>
-      <input type="text" name="Fat" formControlName="fat" matInput placeholder="0" />
+      <input type="number" name="Fat" formControlName="fat" matInput placeholder="0" />
     </mat-form-field>
     <mat-form-field appearance="outline" class="bag-field">
       <mat-label c>Saturated Fat</mat-label>
-      <input type="text" name="satFat" formControlName="satFat" matInput />
+      <input type="number" name="satFat" formControlName="satFat" matInput />
     </mat-form-field>
       <mat-form-field appearance="outline"  class="bag-field" [class.bag-field-risk_range]="isSugarInRange()" >
         <mat-label [class.bag-field-risk_range]="isSugarInRange()">Sugar</mat-label>
-        <input type="text" name="sugar" formControlName="sugar" matInput placeholder="0"/>
+        <input type="number" name="sugar" formControlName="sugar" matInput placeholder="0"/>
       </mat-form-field>
       <mat-form-field appearance="outline"  class="bag-field">
         <mat-label>Salt</mat-label>
-        <input type="text" name="salt" formControlName="salt" matInput placeholder="0" />
+        <input type="number" name="salt" formControlName="salt" matInput placeholder="0" />
       </mat-form-field>
   </form>
 
   <div class="bag-edit-contents">
-    <div class="bag-food-box">
+    <div class="bag-food-box box-1">
       <mat-form-field appearance="fill">
         <mat-label>Add Bag</mat-label>
         <mat-select (selectionChange)="onBagSelectionChange($event.value)">
@@ -36,24 +39,39 @@
         </mat-select>
       </mat-form-field>
       <div  class="bag-list">
-        <mat-list  role="list">
-          <mat-list-item *ngFor="let bagNode of (bagList$ | async)" class="bag-list-item">
-            {{bagNode.bag.name}}
-            {{bagNode.quantity}}
-            <button>Remove</button>
-          </mat-list-item>
-          <!--{{bagNode.bag.name}}
-    {{bagNode.quantity}}
-    <button>Remove</button>-->
-          <!--Fred
-    </mat-list-item>-->
-        </mat-list>
+
+        <table>
+          <thead>
+            <tr>
+              <th data-type="numeric">Qty<span class="resize-handle"></span></th>
+              <th data-type="text-short">Food<span class="resize-handle"></span></th>
+              <th data-type="text-short">Remove<span class="resize-handle"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <div *ngFor="let bagNode of (bagList$ | async)" class="bag-list-item">
+              <tr>
+                <td>{{bagNode.quantity}}</td>              
+                <td class="width-300">{{bagNode.bag.name}}</td>
+                <td>
+                  <button>
+                  <mat-icon>
+                    clear
+                  </mat-icon> 
+                  </button>                
+                </td>
+              </tr>
+            </div>
+
+          </tbody>
+        </table>          
+
       </div>
 
     </div>
     
 
-    <div class="bag-food-box">
+    <div class="bag-food-box box-2">
       <mat-form-field appearance="fill">
         <mat-label>Add Food (to do)</mat-label>
         <mat-select (selectionChange)="onFoodSelectionChange($event.value)">
@@ -62,15 +80,35 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-list role="list">
-        <mat-list-item *ngFor="let foodNode of (foodList$ | async)">
-            {{foodNode.food.name}}
-            x {{foodNode.quantity}}
-            <button>Remove</button>
-        </mat-list-item>
-      </mat-list>
 
 
+
+          <table>
+            <thead>
+
+              
+              <tr>
+                <th data-type="numeric">Qty<span class="resize-handle"></span></th>
+                <th data-type="text-short">Food<span class="resize-handle"></span></th>
+                <th data-type="text-short">Remove<span class="resize-handle"></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <div *ngFor="let foodNode of (foodList$ | async)">
+                <tr>
+                  <td>{{foodNode.quantity}}</td>              
+                  <td class="width-300">{{foodNode.food.name}}</td>
+                  <td>
+                    <button>
+                    <mat-icon>
+                      clear
+                    </mat-icon> 
+                    </button>                
+                  </td>
+                </tr>
+              </div>
+            </tbody>
+          </table>          
     </div>
   </div>
 

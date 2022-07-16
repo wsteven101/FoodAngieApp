@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,9 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatListModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    MatIconModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
